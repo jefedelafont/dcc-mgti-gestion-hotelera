@@ -155,8 +155,10 @@ public class Hotel implements IDatosHotel{
 	public IDatosReserva registrarReserva(long codigo, Cliente cliente,
 			TipoHabitacion tipoHabitacion, GregorianCalendar fechaInicio,
 			GregorianCalendar fechaFin, boolean modificablePorHuesped) {
-		// assert tipos de habitacion por hotel
-
+		
+		
+		Precondition.isTrue(this.confirmarDisponibilidad(tipoHabitacion.getNombre(), fechaInicio, fechaFin), "No hay disponibilidad");
+		
 		Reserva reserva = new Reserva(codigo, fechaInicio, fechaFin,
 				modificablePorHuesped);
 		reserva.registraTipoHabitacion(tipoHabitacion);
