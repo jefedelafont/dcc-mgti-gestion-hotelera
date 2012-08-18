@@ -23,6 +23,7 @@ public class ReservaDTO implements IDatosReserva{
 		this.isModificablePorHuesped = reserva.isModificablePorHuesped();
 		this.isPendiente = reserva.isPendiente();
 		this.isTomada = reserva.isTomada();
+		this.isCancelada = reserva.isCancelada();
 	}
 
 	@Override

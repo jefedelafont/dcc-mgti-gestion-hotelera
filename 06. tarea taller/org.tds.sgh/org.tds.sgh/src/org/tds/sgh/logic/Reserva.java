@@ -90,6 +90,8 @@ public class Reserva {
 	public IDatosHabitacion tomarReserva(Habitacion habitacionLibre) {
 		Precondition.isFalse(isTomada(),
 				"No se puede tomar porque la reserva ya esta tomada");
+		Precondition.isFalse(isCancelada(),
+				"No se puede tomar porque la reserva esta cancelada");
 		Precondition
 				.isFalse(huespedes.size() <= 0,
 						"No se puede tomar porque la reserva porque no tiene huespedes asociados");
