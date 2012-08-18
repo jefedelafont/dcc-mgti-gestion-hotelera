@@ -191,7 +191,7 @@ public class MinimoTestConPersistencia extends BaseTest
 		
 		if (CH == null)
 		{
-			CadenaHotelera newCH = new CadenaHotelera();
+			CadenaHotelera newCH = CadenaHotelera.getInstance();
 			
 			newCH.registrarCliente(nombreCliente, telefono, email);
 			newCH.registrarCliente(nombreCliente2, telefono, email);
