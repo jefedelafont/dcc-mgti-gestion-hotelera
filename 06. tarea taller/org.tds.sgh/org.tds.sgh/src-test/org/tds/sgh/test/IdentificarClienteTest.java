@@ -17,14 +17,14 @@ public class IdentificarClienteTest extends BaseTest
 {
 	// Constantes -------------------------------------------------------------
 	
-	private static final String nombre = "Roberto Martínez";
+	private static final String nombre = "Roberto Martï¿½nez";
 
 	private static final String telefono = "555 5555";
 	
 	private static final String email = "roberto.martinez@mail.com";
 
 
-	private static final String nombre2 = "Gonzalo López";
+	private static final String nombre2 = "Gonzalo Lï¿½pez";
 	
 
 	// Atributos --------------------------------------------------------------
@@ -89,7 +89,7 @@ public class IdentificarClienteTest extends BaseTest
 		List<IDatosCliente> clientes = ic.buscarCliente(".*o.*");
 		
 		assertTrue(clientes.size() == 2);
-		assertTrue(clientes.get(0).getNombre().equals(nombre));
+		assertTrue(clientes.get(1).getNombre().equals(nombre));
 	}
 
 	@Test
