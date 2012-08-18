@@ -201,16 +201,19 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 		return null;
 	}
 
-
+	
+	/**
+	 * Alvaro Jose Peralta ocampo
+	 */
 	@Override
 	public List<IDatosReserva> buscarReservasPendientes(String nombreCliente) {
-		// TODO Auto-generated method stub
-		return null;
+		Cliente cliente = clientes.get(nombreCliente);
+		return cliente.buscarReservasPendientes();
 	}
 
 
 	/**
-	 * alvaro jose peralta
+	 * Alvaro jose peralta ocampo
 	 */
 	@Override
 	public List<IDatosReserva> buscarReservasNoTomadas(String nombreHotel,
