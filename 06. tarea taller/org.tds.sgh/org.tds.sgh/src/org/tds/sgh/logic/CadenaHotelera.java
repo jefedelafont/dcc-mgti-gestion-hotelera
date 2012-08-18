@@ -188,7 +188,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	}
 
 	/**
-	 * Marel
+	 * Marel Oliva
 	 */
 	@Override
 	public boolean confirmarDisponibilidad(String nombreHotel,
@@ -196,6 +196,11 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 			GregorianCalendar fechaFin) {
 
 		hotelEnUso = hoteles.get(nombreHotel);
+		
+		Precondition.isNotNull(hotelEnUso, "No existe el hotel propocionado " + nombreHotel);
+		Precondition.isNotNull(tiposHabitacion.get(nombreTipoHabitacion), "No existe el tipo de habitación propocionado " + nombreHotel);
+		Precondition.isTrue(fechaInicio.compareTo(fechaFin) < 0, "El rango de fechas propocionados incorrecto");
+		
 		return hotelEnUso.confirmarDisponibilidad(nombreTipoHabitacion,
 				fechaInicio, fechaFin);
 	}
@@ -216,6 +221,9 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 		return hotelesDTO;
 	}
 
+	/**
+	 * Marel Oliva
+	 */
 	@Override
 	public IDatosReserva registrarReserva(String nombreCliente,
 			String nombreHotel, String nombreTipoHabitacion,
@@ -227,7 +235,13 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 		Hotel hotel = this.hoteles.get(nombreHotel);
 		Cliente cliente = this.clientes.get(nombreCliente);
 		TipoHabitacion tipoHabitacion = this.tiposHabitacion
-				.get(nombreTipoHabitacion);
+		.get(nombreTipoHabitacion);
+		
+		Precondition.isNotNull(cliente, "No existe el cliente proporcionado " + nombreCliente);
+		Precondition.isNotNull(hotel, "No existe el hotel proporcionado " + nombreHotel);
+		Precondition.isNotNull(tipoHabitacion, "No existe el tipo de habitacion" + nombreTipoHabitacion);
+		Precondition.isTrue(fechaInicio.compareTo(fechaFin) < 0, "El rango de fechas propocionados incorrecto");
+		
 
 		return hotel.registrarReserva(numeracionReservas, cliente,
 				tipoHabitacion, fechaInicio, fechaFin, modificablePorHuesped);
