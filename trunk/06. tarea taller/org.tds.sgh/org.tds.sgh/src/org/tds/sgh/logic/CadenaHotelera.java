@@ -7,10 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapKey;
+import javax.persistence.OneToMany;
+
 
 import org.tds.sgh.dto.HotelDTO;
 import org.tds.sgh.dto.ReservaDTO;
@@ -48,9 +52,38 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	// Atributos --------------------------------------------------------------
 
 	private Map<String, Cliente> clientes;
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	@MapKey(name="nombre")
+	public Map<String, Cliente> getClientes() {
+		return clientes;
+	}
+
+	public void setClientes(Map<String, Cliente> clientes) {
+		this.clientes = clientes;
+	}
+
+	@OneToMany(cascade=CascadeType.ALL)
+	@MapKey(name="nombre")
+	public Map<String, Hotel> getHoteles() {
+		return hoteles;
+	}
+
+	public void setHoteles(Map<String, Hotel> hoteles) {
+		this.hoteles = hoteles;
+	}
+
+	@OneToMany(cascade=CascadeType.ALL)
+	@MapKey(name="nombre")
+	public Map<String, TipoHabitacion> getTiposHabitacion() {
+		return tiposHabitacion;
+	}
+
+	public void setTiposHabitacion(Map<String, TipoHabitacion> tiposHabitacion) {
+		this.tiposHabitacion = tiposHabitacion;
+	}
 
 	private Map<String, Hotel> hoteles;
-
 	private Map<String, TipoHabitacion> tiposHabitacion;
 
 	private Hotel hotelEnUso;
