@@ -17,6 +17,16 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
                                        
                                        
 {
+	
+	
+	private static CadenaHotelera instance;
+	
+	public static CadenaHotelera getInstance() {
+		if ( instance == null ) instance = new CadenaHotelera();
+		
+		return instance;
+	}
+	
 	// Atributos --------------------------------------------------------------
 	
 	private Map<String,Cliente> clientes;
@@ -28,8 +38,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	private Hotel hotelEnUso;
 
 	// Constructores ----------------------------------------------------------
-
-	public CadenaHotelera()
+	private CadenaHotelera()
 	{
 		this.clientes = new HashMap<String,Cliente>();
 		this.hoteles = new HashMap<String,Hotel>();
