@@ -8,13 +8,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import org.tds.sgh.dto.HabitacionDTO;
 import org.tds.sgh.dto.ReservaDTO;
 import org.tds.sgh.dto.TipoHabitacionDTO;
 
+@Entity
 public class Hotel implements IDatosHotel{
 	// Atributos --------------------------------------------------------------
 
+	private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public long getId() {
+		return this.id;
+	}
+
+	protected void setId(long id) {
+		this.id = id;
+	}
+
+	
 	private String nombre;
 	private Map<String, Habitacion> habitaciones;
 	private Map<Long, Reserva> reservas;
