@@ -290,6 +290,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 			GregorianCalendar fecha) {
 		// busca en la lista de hoteles el hotel
 		hotelEnUso = this.hoteles.get(nombreHotel);
+		Precondition.isNotNull(hotelEnUso, "El codigo del hotel seleccionado no exite");
 		return hotelEnUso.buscarReservasNoTomadas(fecha);
 	}
 
