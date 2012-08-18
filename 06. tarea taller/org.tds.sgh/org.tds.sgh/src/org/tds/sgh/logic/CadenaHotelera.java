@@ -176,8 +176,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	@Override
 	public IDatosCliente registrarCliente(String nombre, String telefono,
 			String email) {
-		// Precondition.notContain(clientes, nombre,
-		// "Ya existe un cliente con el nombre '" + nombre + "'");
+		Precondition.notContain(clientes, nombre,"Ya existe un cliente con el nombre '" + nombre + "'");
 
 		Cliente cliente = new Cliente(nombre, telefono, email);
 		clientes.put(nombre, cliente);
@@ -213,7 +212,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 		hotelEnUso = hoteles.get(nombreHotel);
 		
 		Precondition.isNotNull(hotelEnUso, "No existe el hotel propocionado " + nombreHotel);
-		Precondition.isNotNull(tiposHabitacion.get(nombreTipoHabitacion), "No existe el tipo de habitación propocionado " + nombreHotel);
+		Precondition.isNotNull(tiposHabitacion.get(nombreTipoHabitacion), "No existe el tipo de habitaciï¿½n propocionado " + nombreHotel);
 		Precondition.isTrue(fechaInicio.compareTo(fechaFin) < 0, "El rango de fechas propocionados incorrecto");
 		
 		return hotelEnUso.confirmarDisponibilidad(nombreTipoHabitacion,
@@ -229,7 +228,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 
 		
 		Precondition.isNotNull(this.tiposHabitacion.get(nombreTipoHabitacion), 
-				"El nombre del tipo de habitación es inválido " );
+				"El nombre del tipo de habitaciï¿½n es invï¿½lido " );
 		
 		Precondition.isTrue(fechaInicio.compareTo(fechaFin) < 0, "El rango de fechas propocionados incorrecto");
 		
@@ -279,7 +278,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	public List<IDatosReserva> buscarReservasPendientes(String nombreCliente) {
 		
 		Cliente cliente = clientes.get(nombreCliente);
-		Precondition.isNotNull(cliente, "No existe cliente en la Lista de Clientes!"); //Nelson yañez//
+		Precondition.isNotNull(cliente, "No existe cliente en la Lista de Clientes!"); //Nelson yaï¿½ez//
 		return cliente.buscarReservasPendientes();
 	}
 
@@ -296,7 +295,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 
 	@Override
 	/*
-	 * Nelson Yañez
+	 * Nelson Yaï¿½ez
 	 */
 	public IDatosReserva seleccionarReserva(long codigoReserva)
 	{
@@ -306,7 +305,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	}
 
 	@Override
-	//Nelson Yañez
+	//Nelson Yaï¿½ez
 	public IDatosHuesped registrarHuesped(long codigoReserva, String nombre,
 			String documento) {
 		return hotelEnUso.registrarHuespedEnReservaSeleccionada(codigoReserva,
