@@ -4,13 +4,31 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import org.tds.sgh.dto.HabitacionDTO;
 import org.tds.sgh.dto.HuespedDTO;
 
+@Entity
 public class Reserva {
 
 	private long codigo;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public void setCodigo(long codigo) {
+		this.codigo = codigo;
+	}
+
+	public long getCodigo() {
+		return this.codigo;
+	}
+
 	private GregorianCalendar fechaInicio;
+
 	private GregorianCalendar fechaFin;
 	private boolean isModificablePorHuesped;
 	EstadoReserva estadoReserva;
@@ -27,10 +45,6 @@ public class Reserva {
 		this.isModificablePorHuesped = modificablePorHuesped;
 		estadoReserva = EstadoReserva.PENDIENTE;
 		huespedes = new ArrayList<Huesped>();
-	}
-
-	public long getCodigo() {
-		return this.codigo;
 	}
 
 	public GregorianCalendar getFechaInicio() {
