@@ -6,11 +6,10 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.tds.sgh.dto.HotelDTO;
 import org.tds.sgh.dto.ReservaDTO;
-import org.tds.sgh.dto.TipoHabitacionDTO;
+import org.tds.sgh.dto.TiposHabitacionDTO;
 import org.tds.sgh.logic.Precondition.PreconditionException;
 
 public class CadenaHotelera implements IDatosCadenaHotelera,
@@ -44,7 +43,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	public CadenaHotelera() {
 		this.clientes = new HashMap<String, Cliente>();
 		this.hoteles = new HashMap<String, Hotel>();
-		this.tiposHabitacion = new TreeMap<String, TipoHabitacion>();
+		this.tiposHabitacion = new HashMap<String, TipoHabitacion>();
 	}
 
 	// IDatosCadenaHotelera ---------------------------------------------------
@@ -92,7 +91,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 
 		// Long, Reserva
 		for (Reserva reserva : hotel.listarReservasHotel().values()) {
-			res.put(reserva.getCodigo(), new ReservaDTO(reserva));
+			res.put(reserva.getCodigo(), reserva);
 		}
 
 		return res;
@@ -107,10 +106,22 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 				nombreHabitacion);
 	}
 
+	
+	/**
+	 * Marel Oliva
+	 */
 	@Override
 	public IDatosTipoHabitacion obtenerTipoHabitacionDeReserva(long codigo) {
-		// TODO
-		return null;
+		IDatosTipoHabitacion  res = new TiposHabitacionDTO(null);
+		
+		for (Hotel hotel : this.hoteles.values()) {
+			for ( Reserva reserva : hotel.listarReservasHotel().values() ) {
+				if ( reserva.getCodigo() == codigo ) {
+					res = new TiposHabitacionDTO(reserva.getTipoHabitacion());
+				}
+			}
+		}
+		return res;
 	}
 
 	@Override
@@ -136,10 +147,12 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 		Precondition.notContain(tiposHabitacion, nombre,
 				"Ya existe un tipo de habitaciï¿½n con el nombre '" + nombre
 						+ "'");
+		
 		TipoHabitacion tipoHabitacion = new TipoHabitacion(nombre);
+
+		
 		tiposHabitacion.put(nombre, tipoHabitacion);
-		IDatosTipoHabitacion iDatosTipoHabitacion = new TipoHabitacionDTO(tipoHabitacion);
-		return iDatosTipoHabitacion;
+		return tipoHabitacion;
 	}
 
 	@Override
@@ -163,7 +176,8 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	@Override
 	public IDatosCliente registrarCliente(String nombre, String telefono,
 			String email) {
-		 Precondition.notContain(clientes, nombre,"Ya existe un cliente con el nombre '" + nombre + "'");
+		// Precondition.notContain(clientes, nombre,
+		// "Ya existe un cliente con el nombre '" + nombre + "'");
 
 		Cliente cliente = new Cliente(nombre, telefono, email);
 		clientes.put(nombre, cliente);
@@ -199,17 +213,26 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 		hotelEnUso = hoteles.get(nombreHotel);
 		
 		Precondition.isNotNull(hotelEnUso, "No existe el hotel propocionado " + nombreHotel);
-		Precondition.isNotNull(tiposHabitacion.get(nombreTipoHabitacion), "No existe el tipo de habitaciï¿½n propocionado " + nombreHotel);
+		Precondition.isNotNull(tiposHabitacion.get(nombreTipoHabitacion), "No existe el tipo de habitación propocionado " + nombreHotel);
 		Precondition.isTrue(fechaInicio.compareTo(fechaFin) < 0, "El rango de fechas propocionados incorrecto");
 		
 		return hotelEnUso.confirmarDisponibilidad(nombreTipoHabitacion,
 				fechaInicio, fechaFin);
 	}
 
+	/**
+	 * Marel Oliva
+	 */
 	@Override
 	public List<IDatosHotel> sugerirAlternativas(String nombreTipoHabitacion,
 			GregorianCalendar fechaInicio, GregorianCalendar fechaFin) {
 
+		
+		Precondition.isNotNull(this.tiposHabitacion.get(nombreTipoHabitacion), 
+				"El nombre del tipo de habitación es inválido " );
+		
+		Precondition.isTrue(fechaInicio.compareTo(fechaFin) < 0, "El rango de fechas propocionados incorrecto");
+		
 		List<IDatosHotel> hotelesDTO = new ArrayList<IDatosHotel>();
 
 		for (Hotel hotel : hoteles.values()) {
@@ -233,18 +256,18 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 
 		numeracionReservas += 1;
 
-		hotelEnUso = this.hoteles.get(nombreHotel);
+		Hotel hotel = this.hoteles.get(nombreHotel);
 		Cliente cliente = this.clientes.get(nombreCliente);
 		TipoHabitacion tipoHabitacion = this.tiposHabitacion
 		.get(nombreTipoHabitacion);
 		
 		Precondition.isNotNull(cliente, "No existe el cliente proporcionado " + nombreCliente);
-		Precondition.isNotNull(hotelEnUso, "No existe el hotel proporcionado " + nombreHotel);
+		Precondition.isNotNull(hotel, "No existe el hotel proporcionado " + nombreHotel);
 		Precondition.isNotNull(tipoHabitacion, "No existe el tipo de habitacion" + nombreTipoHabitacion);
 		Precondition.isTrue(fechaInicio.compareTo(fechaFin) < 0, "El rango de fechas propocionados incorrecto");
 		
 
-		return hotelEnUso.registrarReserva(numeracionReservas, cliente,
+		return hotel.registrarReserva(numeracionReservas, cliente,
 				tipoHabitacion, fechaInicio, fechaFin, modificablePorHuesped);
 
 	}
