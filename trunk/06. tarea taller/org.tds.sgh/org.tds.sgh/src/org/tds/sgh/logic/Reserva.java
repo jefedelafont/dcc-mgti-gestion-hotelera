@@ -1,8 +1,11 @@
 package org.tds.sgh.logic;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.tds.sgh.dto.HabitacionDTO;
+import org.tds.sgh.dto.HuespedDTO;
 
 public class Reserva implements IDatosReserva {
 
@@ -13,15 +16,19 @@ public class Reserva implements IDatosReserva {
 	EstadoReserva estadoReserva;
 	private TipoHabitacion tipoHabitacion;
 	private Habitacion habitacion;
+	private List<Huesped> huespedes;
 	
-	public Reserva(long codigo, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean modificablePorHuesped) {
+	
+	public Reserva(long codigo, GregorianCalendar fechaInicio,
+			GregorianCalendar fechaFin, boolean modificablePorHuesped) {
 		this.codigo = codigo;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
 		this.isModificablePorHuesped = modificablePorHuesped;
 		estadoReserva = EstadoReserva.PENDIENTE;
+		huespedes = new ArrayList<Huesped>();
 	}
-	
+
 	@Override
 	public long getCodigo() {
 		return this.codigo;
@@ -63,15 +70,15 @@ public class Reserva implements IDatosReserva {
 	}
 
 	public boolean estasEnFechayNoTomada(GregorianCalendar fecha) {
-		boolean estasEnFecha = fechaInicio.before(fecha)
-				&& fechaFin.after(fecha);
+		boolean estasEnFecha = fechaInicio.compareTo(fecha) <= 0
+				&& fechaFin.compareTo(fecha) >= 0;
 		return estasEnFecha && !isTomada();
 	}
-	
-	public void registraTipoHabitacion(IDatosTipoHabitacion tipoHabitacion) {
-		this.tipoHabitacion = this.tipoHabitacion;
+
+	public void registraTipoHabitacion(TipoHabitacion tipoHabitacion) {
+		this.tipoHabitacion = tipoHabitacion;
 	}
-	
+
 	public boolean estasEnRango(Reserva reservaSeleccionada) {
 		return reservaSeleccionada.fechaInicio.after(this.fechaFin)
 				&& reservaSeleccionada.fechaFin.before(this.fechaInicio);
@@ -85,6 +92,13 @@ public class Reserva implements IDatosReserva {
 		this.habitacion = habitacionLibre;
 		IDatosHabitacion iDatosHabitacion = new HabitacionDTO(habitacionLibre);
 		return iDatosHabitacion;
+	}
+
+	public IDatosHuesped registarHuesped(String nombre2, String documento) {
+		Huesped huesped = new Huesped(nombre2,documento);
+		huespedes.add(huesped);
+		IDatosHuesped iDatosHuesped = new HuespedDTO(huesped);
+		return iDatosHuesped;
 	}
 
 }
