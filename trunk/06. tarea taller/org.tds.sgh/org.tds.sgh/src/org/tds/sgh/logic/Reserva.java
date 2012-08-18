@@ -19,6 +19,7 @@ public class Reserva implements IDatosReserva {
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
 		this.isModificablePorHuesped = modificablePorHuesped;
+		estadoReserva = EstadoReserva.PENDIENTE;
 	}
 	
 	@Override

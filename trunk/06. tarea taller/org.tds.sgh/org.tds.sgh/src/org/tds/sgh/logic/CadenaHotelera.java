@@ -40,7 +40,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	private Hotel hotelEnUso;
 
 	// Constructores ----------------------------------------------------------
-	private CadenaHotelera()
+	public CadenaHotelera()
 	{
 		this.clientes = new HashMap<String,Cliente>();
 		this.hoteles = new HashMap<String,Hotel>();
@@ -175,14 +175,17 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 		
 	}
 
-
+	
+	/**
+	 * Marel
+	 */
 	@Override
 	public boolean confirmarDisponibilidad(String nombreHotel,
 			String nombreTipoHabitacion, GregorianCalendar fechaInicio,
 			GregorianCalendar fechaFin) {
 		
-		Hotel hotel = hoteles.get(nombreHotel);
-		return hotel.confirmarDisponibilidad(nombreTipoHabitacion, fechaInicio, fechaFin);
+		hotelEnUso = hoteles.get(nombreHotel);
+		return hotelEnUso.confirmarDisponibilidad(nombreTipoHabitacion, fechaInicio, fechaFin);
 	}
 
 
