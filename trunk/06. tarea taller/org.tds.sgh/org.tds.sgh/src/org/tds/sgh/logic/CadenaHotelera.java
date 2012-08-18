@@ -10,6 +10,7 @@ import java.util.TreeMap;
 
 import org.tds.sgh.dto.HotelDTO;
 import org.tds.sgh.dto.ReservaDTO;
+import org.tds.sgh.dto.TipoHabitacionDTO;
 import org.tds.sgh.logic.Precondition.PreconditionException;
 
 public class CadenaHotelera implements IDatosCadenaHotelera,
@@ -91,7 +92,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 
 		// Long, Reserva
 		for (Reserva reserva : hotel.listarReservasHotel().values()) {
-			res.put(reserva.getCodigo(), reserva);
+			res.put(reserva.getCodigo(), new ReservaDTO(reserva));
 		}
 
 		return res;
@@ -135,10 +136,10 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 		Precondition.notContain(tiposHabitacion, nombre,
 				"Ya existe un tipo de habitaci�n con el nombre '" + nombre
 						+ "'");
-
 		TipoHabitacion tipoHabitacion = new TipoHabitacion(nombre);
 		tiposHabitacion.put(nombre, tipoHabitacion);
-		return tipoHabitacion;
+		IDatosTipoHabitacion iDatosTipoHabitacion = new TipoHabitacionDTO(tipoHabitacion);
+		return iDatosTipoHabitacion;
 	}
 
 	@Override

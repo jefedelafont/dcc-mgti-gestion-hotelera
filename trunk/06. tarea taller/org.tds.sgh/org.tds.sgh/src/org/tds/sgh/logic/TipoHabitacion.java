@@ -1,7 +1,7 @@
 package org.tds.sgh.logic;
 
 
-public class TipoHabitacion implements IDatosTipoHabitacion
+public class TipoHabitacion implements IDatosTipoHabitacion 
 {
 	// Atributos --------------------------------------------------------------
 	
@@ -18,7 +18,6 @@ public class TipoHabitacion implements IDatosTipoHabitacion
 	
 	// IDatosTipoHabitacion ---------------------------------------------------
 	
-	@Override
 	public String getNombre()
 	{
 		return this.nombre;
