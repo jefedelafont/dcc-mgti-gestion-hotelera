@@ -341,10 +341,17 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	 */
 	@Override
 	public void cancelarReserva(long codigoReserva) {
+		
+		boolean existeReserva = false;
+		
 		for (Hotel hotel : this.hoteles.values()) {
-			if (hotel.containsReserva(codigoReserva)) 
+			if (hotel.containsReserva(codigoReserva)) {
 				hotel.cancelarReserva(codigoReserva);
+				existeReserva = true;
+			}
 		}
+		
+		Precondition.isTrue(existeReserva, "No existe la reserva propocionada: " + codigoReserva);
 		
 	}
 }
