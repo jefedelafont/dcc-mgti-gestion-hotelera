@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.tds.sgh.dto.HabitacionDTO;
 import org.tds.sgh.dto.HuespedDTO;
@@ -34,7 +36,11 @@ public class Reserva {
 	EstadoReserva estadoReserva;
 	private TipoHabitacion tipoHabitacion;
 	private Habitacion habitacion;
+	
+	
 	// nelson Ya�ez//
+	
+	
 	private List<Huesped> huespedes;
 
 	public Reserva(long codigo, GregorianCalendar fechaInicio,
@@ -46,18 +52,13 @@ public class Reserva {
 		estadoReserva = EstadoReserva.PENDIENTE;
 		huespedes = new ArrayList<Huesped>();
 	}
-
-	public GregorianCalendar getFechaInicio() {
-
-		return this.fechaInicio;
+	@OneToMany(cascade=CascadeType.ALL)
+	public List<Huesped> getHuespedes() {
+		return huespedes;
 	}
 
-	public GregorianCalendar getFechaFin() {
-		return this.fechaFin;
-	}
-
-	public boolean isModificablePorHuesped() {
-		return this.isModificablePorHuesped;
+	public void setHuespedes(List<Huesped> huespedes) {
+		this.huespedes = huespedes;
 	}
 
 	public boolean isPendiente() {
