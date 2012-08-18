@@ -90,6 +90,9 @@ public class Reserva {
 	public IDatosHabitacion tomarReserva(Habitacion habitacionLibre) {
 		Precondition.isFalse(isTomada(),
 				"No se puede tomar porque la reserva ya esta tomada");
+		Precondition
+				.isFalse(huespedes.size() <= 0,
+						"No se puede tomar porque la reserva porque no tiene huespedes asociados");
 		this.habitacion = habitacionLibre;
 		this.estadoReserva = EstadoReserva.TOMADA;
 		IDatosHabitacion iDatosHabitacion = new HabitacionDTO(habitacionLibre);
