@@ -22,6 +22,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	
 	private Map<String,TipoHabitacion> tiposHabitacion;
 	
+	private Hotel hotelEnUso;
 
 	// Constructores ----------------------------------------------------------
 
@@ -217,8 +218,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 
 	@Override
 	public IDatosReserva seleccionarReserva(long codigoReserva) {
-		// TODO Auto-generated method stub
-		return null;
+		return hotelEnUso.seleccionarReserva(codigoReserva);
 	}
 
 
