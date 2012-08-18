@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.tds.sgh.dto.ReservaDTO;
 
 public class Hotel implements IDatosHotel
 {
@@ -14,7 +17,7 @@ public class Hotel implements IDatosHotel
 	private String nombre;
 	
 	private Map<String,Habitacion> habitaciones;
-	private List<IDatosReserva> reservas;
+	private List<Reserva> reservas;
 	
 	// Constructores ----------------------------------------------------------
 	
@@ -22,7 +25,7 @@ public class Hotel implements IDatosHotel
 	{
 		this.nombre = nombre;
 		this.habitaciones = new HashMap<String,Habitacion>();
-		this.reservas = new ArrayList<IDatosReserva>();
+		this.reservas = new ArrayList<Reserva>();
 	}
 	
 	
@@ -39,7 +42,7 @@ public class Hotel implements IDatosHotel
 	
 	Habitacion registrarHabitacion(TipoHabitacion tipoHabitacion, String nombre)
 	{
-		Precondition.notContain(habitaciones, nombre, "En el hotel '" + this.nombre + "' ya existe una habitación con el nombre '" + nombre + "'");
+		Precondition.notContain(habitaciones, nombre, "En el hotel '" + this.nombre + "' ya existe una habitaciï¿½n con el nombre '" + nombre + "'");
 		
 		Habitacion habitacion = new Habitacion(tipoHabitacion, nombre);
 		habitaciones.put(nombre, habitacion);
@@ -80,5 +83,20 @@ public class Hotel implements IDatosHotel
 			boolean modificablePorHuesped) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	public List<IDatosReserva> buscarReservasNoTomadas(GregorianCalendar fecha) {
+		List<IDatosReserva> datosReservas = new ArrayList<IDatosReserva>();
+		Iterator<Reserva> iterReservas = reservas.iterator();
+		while(iterReservas.hasNext()){
+			Reserva reserva = iterReservas.next();
+			boolean enFechayNoTomada = reserva.estasEnFechayNoTomada(fecha);
+			if(enFechayNoTomada){
+				IDatosReserva iDatosReserva = new ReservaDTO();
+				
+			}
+		}
+		return datosReservas;
 	}
 }

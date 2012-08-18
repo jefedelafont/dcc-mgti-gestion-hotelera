@@ -11,7 +11,7 @@ public class Reserva implements IDatosReserva {
 	private boolean isPendiente;
 	private boolean isTomada;
 	private boolean isCancelada;
-	
+	private TipoHabitacion tipoHabitacion;
 
 	
 	@Override
@@ -49,6 +49,10 @@ public class Reserva implements IDatosReserva {
 	@Override
 	public boolean isCancelada() {
 		return this.isCancelada;
+	}
+
+	public TipoHabitacion getTipoHabitacion() {
+		return tipoHabitacion;
 	}
 	
 	

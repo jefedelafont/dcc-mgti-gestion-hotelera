@@ -10,7 +10,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
                                        IAltaHotelController,
                                        IAltaClienteController,
                                        IIdentificarClienteController,
-                                       IHacerReservaController
+                                       IHacerReservaController,ITomarReservaController
                                        
                                        
 {
@@ -56,7 +56,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	@Override
 	public Map<String,IDatosHabitacion> listarHabitaciones(String nombreHotel)
 	{
-		Precondition.contains(hoteles, nombreHotel, "El hotel '" + nombreHotel + "' no está registrado");
+		Precondition.contains(hoteles, nombreHotel, "El hotel '" + nombreHotel + "' no estï¿½ registrado");
 		return hoteles.get(nombreHotel).listarHabitaciones();
 	}
 
@@ -77,7 +77,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	@Override
 	public IDatosTipoHabitacion obtenerTipoHabitacionDeHabitacion(String nombreHotel, String nombreHabitacion)
 	{
-		Precondition.contains(hoteles, nombreHotel, "El hotel '" + nombreHotel + "' no está registrado");
+		Precondition.contains(hoteles, nombreHotel, "El hotel '" + nombreHotel + "' no estï¿½ registrado");
 		return hoteles.get(nombreHotel).obtenerTipoHabitacionDeHabitacion(nombreHabitacion);
 	}
 
@@ -111,7 +111,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	@Override
 	public IDatosTipoHabitacion registrarTipoHabitacion(String nombre)
 	{
-		Precondition.notContain(tiposHabitacion, nombre, "Ya existe un tipo de habitación con el nombre '" + nombre + "'");
+		Precondition.notContain(tiposHabitacion, nombre, "Ya existe un tipo de habitaciï¿½n con el nombre '" + nombre + "'");
 		
 		TipoHabitacion tipoHabitacion = new TipoHabitacion(nombre);
 		tiposHabitacion.put(nombre, tipoHabitacion);
@@ -122,7 +122,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	public IDatosHabitacion registrarHabitacion(String nombreHotel, String nombreTipoHabitacion, String nombre)
 	{
 		Precondition.contains(hoteles, nombreHotel, "No existe un hotel con el nombre '" + nombreHotel + "'");
-		Precondition.contains(tiposHabitacion, nombreTipoHabitacion, "No existe un tipo de habitación con el nombre '" + nombreTipoHabitacion + "'");
+		Precondition.contains(tiposHabitacion, nombreTipoHabitacion, "No existe un tipo de habitaciï¿½n con el nombre '" + nombreTipoHabitacion + "'");
 		
 		Hotel hotel = hoteles.get(nombreHotel);
 		TipoHabitacion tipoHabitacion = tiposHabitacion.get(nombreTipoHabitacion);
@@ -199,6 +199,47 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 			String nombreHotel, String nombreTipoHabitacion,
 			GregorianCalendar fechaInicio, GregorianCalendar fechaFin,
 			boolean modificablePorHuesped) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<IDatosReserva> buscarReservasPendientes(String nombreCliente) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * alvaro jose peralta
+	 */
+	@Override
+	public List<IDatosReserva> buscarReservasNoTomadas(String nombreHotel,
+			GregorianCalendar fecha) {
+		// busca en la lista de hoteles el hotel
+		Hotel hotel = this.hoteles.get(nombreHotel);
+		return hotel.buscarReservasNoTomadas(fecha);
+	}
+
+
+	@Override
+	public IDatosReserva seleccionarReserva(long codigoReserva) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public IDatosHuesped registrarHuesped(long codigoReserva, String nombre,
+			String documento) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public IDatosHabitacion tomarReserva(long codigoReserva) {
 		// TODO Auto-generated method stub
 		return null;
 	}
