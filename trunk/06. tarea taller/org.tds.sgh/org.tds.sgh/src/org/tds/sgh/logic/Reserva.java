@@ -16,10 +16,9 @@ public class Reserva {
 	EstadoReserva estadoReserva;
 	private TipoHabitacion tipoHabitacion;
 	private Habitacion habitacion;
-	//nelson Yañez//
+	// nelson Yaï¿½ez//
 	private List<Huesped> huespedes;
-	
-	
+
 	public Reserva(long codigo, GregorianCalendar fechaInicio,
 			GregorianCalendar fechaFin, boolean modificablePorHuesped) {
 		this.codigo = codigo;
@@ -30,38 +29,31 @@ public class Reserva {
 		huespedes = new ArrayList<Huesped>();
 	}
 
-	
 	public long getCodigo() {
 		return this.codigo;
 	}
 
-	
 	public GregorianCalendar getFechaInicio() {
 
 		return this.fechaInicio;
 	}
 
-	
 	public GregorianCalendar getFechaFin() {
 		return this.fechaFin;
 	}
 
-	
 	public boolean isModificablePorHuesped() {
 		return this.isModificablePorHuesped;
 	}
 
-	
 	public boolean isPendiente() {
 		return estadoReserva.compareTo(EstadoReserva.PENDIENTE) == 0;
 	}
 
-	
 	public boolean isTomada() {
 		return estadoReserva.compareTo(EstadoReserva.TOMADA) == 0;
 	}
 
-	
 	public boolean isCancelada() {
 		return estadoReserva.compareTo(EstadoReserva.CANCELADA) == 0;
 	}
@@ -89,14 +81,24 @@ public class Reserva {
 		return this.habitacion.equals(habitacion);
 	}
 
+	/**
+	 * alvaro modificacion para agregar la condicion
+	 * 
+	 * @param habitacionLibre
+	 * @return
+	 */
 	public IDatosHabitacion tomarReserva(Habitacion habitacionLibre) {
+		Precondition.isFalse(isTomada(),
+				"No se puede tomar porque la reserva ya esta tomada");
 		this.habitacion = habitacionLibre;
+		this.estadoReserva = EstadoReserva.TOMADA;
 		IDatosHabitacion iDatosHabitacion = new HabitacionDTO(habitacionLibre);
 		return iDatosHabitacion;
 	}
-     //neslon yañez//
+
+	// neslon yaï¿½ez//
 	public IDatosHuesped registarHuesped(String nombre2, String documento) {
-		Huesped huesped = new Huesped(nombre2,documento);
+		Huesped huesped = new Huesped(nombre2, documento);
 		huespedes.add(huesped);
 		IDatosHuesped iDatosHuesped = new HuespedDTO(huesped);
 		return iDatosHuesped;
