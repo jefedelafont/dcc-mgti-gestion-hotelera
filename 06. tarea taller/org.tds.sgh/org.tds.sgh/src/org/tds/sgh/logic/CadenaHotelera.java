@@ -196,9 +196,12 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 			GregorianCalendar fechaInicio, GregorianCalendar fechaFin,
 			boolean modificablePorHuesped) {
 		
-		Hotel hotel = hoteles.get(nombreHotel);
+		Hotel hotel = this.hoteles.get(nombreHotel);
+		Cliente cliente = this.clientes.get(nombreCliente);
+		TipoHabitacion tipoHabitacion = this.tiposHabitacion.get(nombreTipoHabitacion);
 		
-		return null;
+		return hotel.registrarReserva(cliente, tipoHabitacion, fechaInicio, fechaFin, modificablePorHuesped);
+
 	}
 
 	
