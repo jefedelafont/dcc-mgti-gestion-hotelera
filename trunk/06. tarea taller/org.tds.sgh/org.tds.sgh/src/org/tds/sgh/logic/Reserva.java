@@ -7,22 +7,20 @@ public class Reserva implements IDatosReserva {
 	private long codigo;
 	private GregorianCalendar fechaInicio;
 	private GregorianCalendar fechaFin;
-	private boolean isModificablePorHuesped ;
+	private boolean isModificablePorHuesped;
 	private boolean isPendiente;
 	private boolean isTomada;
 	private boolean isCancelada;
 	private TipoHabitacion tipoHabitacion;
 
-	
 	@Override
 	public long getCodigo() {
-		// TODO Auto-generated method stub
 		return this.codigo;
 	}
-	
+
 	@Override
 	public GregorianCalendar getFechaInicio() {
-		
+
 		return this.fechaInicio;
 	}
 
@@ -54,6 +52,11 @@ public class Reserva implements IDatosReserva {
 	public TipoHabitacion getTipoHabitacion() {
 		return tipoHabitacion;
 	}
-	
-	
+
+	public boolean estasEnFechayNoTomada(GregorianCalendar fecha) {
+		boolean estasEnFecha = fechaInicio.before(fecha)
+				&& fechaFin.after(fecha);
+		return estasEnFecha && !isTomada();
+	}
+
 }
