@@ -20,7 +20,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	
 	
 	private static CadenaHotelera instance;
-	
+	// MAREL
 	public static CadenaHotelera getInstance() {
 		if ( instance == null ) instance = new CadenaHotelera();
 		
