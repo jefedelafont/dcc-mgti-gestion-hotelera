@@ -60,8 +60,8 @@ public class Hotel implements IDatosHotel {
 	boolean confirmarDisponibilidad(String nombreTipoHabitacion,
 			GregorianCalendar fechaInicio, GregorianCalendar fechaFin) {
 		boolean res = true;
-
-		int cantidadReservas = this.cantidadReservasTipoHabitacion(
+		
+				int cantidadReservas = this.cantidadReservasTipoHabitacion(
 				nombreTipoHabitacion, fechaInicio, fechaFin);
 		int cantidadaHabitaciones = this
 				.cantidadHabitacionessTipoHabitacion(nombreTipoHabitacion);
@@ -75,6 +75,7 @@ public class Hotel implements IDatosHotel {
 		int res = 0;
 
 		for (Reserva reserva : reservas.values()) {
+			
 			if (reserva.getTipoHabitacion().getNombre()
 					.equals(nombreTipoHabitacion)
 					&& fechaInicio.compareTo(reserva.getFechaFin()) < 0
