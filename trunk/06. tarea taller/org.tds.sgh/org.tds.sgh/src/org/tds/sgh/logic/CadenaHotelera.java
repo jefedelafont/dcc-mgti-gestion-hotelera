@@ -15,7 +15,7 @@ import org.tds.sgh.logic.Precondition.PreconditionException;
 public class CadenaHotelera implements IDatosCadenaHotelera,
 		IAltaHotelController, IAltaClienteController,
 		IIdentificarClienteController, IHacerReservaController,
-		ITomarReservaController
+		ITomarReservaController, ICancelarReservaController
 
 {
 
@@ -334,5 +334,17 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 
 		}
 		return clis;
+	}
+
+	/**
+	 * Marel Oliva
+	 */
+	@Override
+	public void cancelarReserva(long codigoReserva) {
+		for (Hotel hotel : this.hoteles.values()) {
+			if (hotel.containsReserva(codigoReserva)) 
+				hotel.cancelarReserva(codigoReserva);
+		}
+		
 	}
 }
