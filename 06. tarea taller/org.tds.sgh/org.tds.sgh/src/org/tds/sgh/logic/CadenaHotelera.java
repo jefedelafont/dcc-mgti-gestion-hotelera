@@ -256,18 +256,18 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 
 		numeracionReservas += 1;
 
-		Hotel hotel = this.hoteles.get(nombreHotel);
+		hotelEnUso = this.hoteles.get(nombreHotel);
 		Cliente cliente = this.clientes.get(nombreCliente);
 		TipoHabitacion tipoHabitacion = this.tiposHabitacion
 		.get(nombreTipoHabitacion);
 		
 		Precondition.isNotNull(cliente, "No existe el cliente proporcionado " + nombreCliente);
-		Precondition.isNotNull(hotel, "No existe el hotel proporcionado " + nombreHotel);
+		Precondition.isNotNull(hotelEnUso, "No existe el hotel proporcionado " + nombreHotel);
 		Precondition.isNotNull(tipoHabitacion, "No existe el tipo de habitacion" + nombreTipoHabitacion);
 		Precondition.isTrue(fechaInicio.compareTo(fechaFin) < 0, "El rango de fechas propocionados incorrecto");
 		
 
-		return hotel.registrarReserva(numeracionReservas, cliente,
+		return hotelEnUso.registrarReserva(numeracionReservas, cliente,
 				tipoHabitacion, fechaInicio, fechaFin, modificablePorHuesped);
 
 	}
@@ -277,7 +277,9 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	 */
 	@Override
 	public List<IDatosReserva> buscarReservasPendientes(String nombreCliente) {
+		
 		Cliente cliente = clientes.get(nombreCliente);
+		Precondition.isNotNull(cliente, "No existe cliente en la Lista de Clientes!"); //Nelson yañez//
 		return cliente.buscarReservasPendientes();
 	}
 
@@ -293,11 +295,18 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	}
 
 	@Override
-	public IDatosReserva seleccionarReserva(long codigoReserva) {
+	/*
+	 * Nelson Yañez
+	 */
+	public IDatosReserva seleccionarReserva(long codigoReserva)
+	{
+		Precondition.isNotNull(this.hotelEnUso, "Hotel en uso esta en Null!");
+		
 		return hotelEnUso.seleccionarReserva(codigoReserva);
 	}
 
 	@Override
+	//Nelson Yañez
 	public IDatosHuesped registrarHuesped(long codigoReserva, String nombre,
 			String documento) {
 		return hotelEnUso.registrarHuespedEnReservaSeleccionada(codigoReserva,
