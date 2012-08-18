@@ -5,15 +5,15 @@ import org.tds.sgh.logic.TipoHabitacion;
 
 public class TipoHabitacionDTO implements IDatosTipoHabitacion {
 
-	private String nombre;
+	private TipoHabitacion tipoHabitacion;
 
 	public TipoHabitacionDTO(TipoHabitacion tipoHabitacion) {
-		this.nombre = tipoHabitacion.getNombre();
+		this.tipoHabitacion = tipoHabitacion;
 	}
 
 	@Override
 	public String getNombre() {
-		return nombre;
+		return tipoHabitacion.getNombre();
 	}
 
 }
