@@ -8,9 +8,7 @@ public class Reserva implements IDatosReserva {
 	private GregorianCalendar fechaInicio;
 	private GregorianCalendar fechaFin;
 	private boolean isModificablePorHuesped;
-	private boolean isPendiente;
-	private boolean isTomada;
-	private boolean isCancelada;
+	EstadoReserva estadoReserva;
 	private TipoHabitacion tipoHabitacion;
 
 	@Override
@@ -36,17 +34,17 @@ public class Reserva implements IDatosReserva {
 
 	@Override
 	public boolean isPendiente() {
-		return this.isPendiente;
+		return estadoReserva.compareTo(EstadoReserva.PENDIENTE) == 0;
 	}
 
 	@Override
 	public boolean isTomada() {
-		return this.isTomada;
+		return estadoReserva.compareTo(EstadoReserva.TOMADA) == 0;
 	}
 
 	@Override
 	public boolean isCancelada() {
-		return this.isCancelada;
+		return estadoReserva.compareTo(EstadoReserva.CANCELADA) == 0;
 	}
 
 	public TipoHabitacion getTipoHabitacion() {
