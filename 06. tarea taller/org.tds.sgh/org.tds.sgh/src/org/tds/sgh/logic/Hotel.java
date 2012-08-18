@@ -10,8 +10,9 @@ import java.util.Map;
 
 import org.tds.sgh.dto.HabitacionDTO;
 import org.tds.sgh.dto.ReservaDTO;
+import org.tds.sgh.dto.TipoHabitacionDTO;
 
-public class Hotel implements IDatosHotel {
+public class Hotel implements IDatosHotel{
 	// Atributos --------------------------------------------------------------
 
 	private String nombre;
@@ -29,7 +30,6 @@ public class Hotel implements IDatosHotel {
 
 	// IDatosHotel ------------------------------------------------------------
 
-	@Override
 	public String getNombre() {
 		return nombre;
 	}
@@ -51,17 +51,21 @@ public class Hotel implements IDatosHotel {
 				.<String, IDatosHabitacion> unmodifiableMap(habitaciones);
 	}
 
-	IDatosTipoHabitacion obtenerTipoHabitacionDeHabitacion(
+	public IDatosTipoHabitacion obtenerTipoHabitacionDeHabitacion(
 			String nombreHabitacion) {
-		return habitaciones.get(nombreHabitacion).getTipoHabitacion();
+		TipoHabitacion tipoHabitacion = habitaciones.get(nombreHabitacion)
+				.getTipoHabitacion();
+		TipoHabitacionDTO tipoHabitacionDTO = new TipoHabitacionDTO(
+				tipoHabitacion);
+		return tipoHabitacionDTO;
 	}
 
 	// MAREL
 	boolean confirmarDisponibilidad(String nombreTipoHabitacion,
 			GregorianCalendar fechaInicio, GregorianCalendar fechaFin) {
 		boolean res = true;
-		
-				int cantidadReservas = this.cantidadReservasTipoHabitacion(
+
+		int cantidadReservas = this.cantidadReservasTipoHabitacion(
 				nombreTipoHabitacion, fechaInicio, fechaFin);
 		int cantidadaHabitaciones = this
 				.cantidadHabitacionessTipoHabitacion(nombreTipoHabitacion);
@@ -75,7 +79,7 @@ public class Hotel implements IDatosHotel {
 		int res = 0;
 
 		for (Reserva reserva : reservas.values()) {
-			
+
 			if (reserva.getTipoHabitacion().getNombre()
 					.equals(nombreTipoHabitacion)
 					&& fechaInicio.compareTo(reserva.getFechaFin()) < 0
@@ -148,7 +152,7 @@ public class Hotel implements IDatosHotel {
 	}
 
 	// MAREL
-	IDatosReserva registrarReserva(long codigo, Cliente cliente,
+	public IDatosReserva registrarReserva(long codigo, Cliente cliente,
 			TipoHabitacion tipoHabitacion, GregorianCalendar fechaInicio,
 			GregorianCalendar fechaFin, boolean modificablePorHuesped) {
 		// assert tipos de habitacion por hotel
@@ -163,7 +167,8 @@ public class Hotel implements IDatosHotel {
 		// reservas del cliente
 		cliente.RegistrarReserva(reserva);
 
-		return reserva;
+		IDatosReserva iDatosReserva = new ReservaDTO(reserva);
+		return iDatosReserva;
 	}
 
 	public void confirmarReserva(long codigoReserva) {
@@ -215,9 +220,9 @@ public class Hotel implements IDatosHotel {
 		return this.reservaSeleccionada.registarHuesped(nombre2, documento);
 	}
 
-	//marel
+	// marel
 	public Map<Long, Reserva> listarReservasHotel() {
 		return this.reservas;
-	}	
-	
+	}
+
 }

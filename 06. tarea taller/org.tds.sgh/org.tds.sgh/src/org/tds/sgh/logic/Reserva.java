@@ -7,7 +7,7 @@ import java.util.List;
 import org.tds.sgh.dto.HabitacionDTO;
 import org.tds.sgh.dto.HuespedDTO;
 
-public class Reserva implements IDatosReserva {
+public class Reserva {
 
 	private long codigo;
 	private GregorianCalendar fechaInicio;
@@ -29,38 +29,38 @@ public class Reserva implements IDatosReserva {
 		huespedes = new ArrayList<Huesped>();
 	}
 
-	@Override
+	
 	public long getCodigo() {
 		return this.codigo;
 	}
 
-	@Override
+	
 	public GregorianCalendar getFechaInicio() {
 
 		return this.fechaInicio;
 	}
 
-	@Override
+	
 	public GregorianCalendar getFechaFin() {
 		return this.fechaFin;
 	}
 
-	@Override
+	
 	public boolean isModificablePorHuesped() {
 		return this.isModificablePorHuesped;
 	}
 
-	@Override
+	
 	public boolean isPendiente() {
 		return estadoReserva.compareTo(EstadoReserva.PENDIENTE) == 0;
 	}
 
-	@Override
+	
 	public boolean isTomada() {
 		return estadoReserva.compareTo(EstadoReserva.TOMADA) == 0;
 	}
 
-	@Override
+	
 	public boolean isCancelada() {
 		return estadoReserva.compareTo(EstadoReserva.CANCELADA) == 0;
 	}

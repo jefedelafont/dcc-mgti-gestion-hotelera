@@ -29,17 +29,14 @@ public class Cliente implements IDatosCliente {
 
 	// IDatosCliente ----------------------------------------------------------
 
-	@Override
 	public String getNombre() {
 		return nombre;
 	}
 
-	@Override
 	public String getTelefono() {
 		return telefono;
 	}
 
-	@Override
 	public String getEMail() {
 		return email;
 	}
