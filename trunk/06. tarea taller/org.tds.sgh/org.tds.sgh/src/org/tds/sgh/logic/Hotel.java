@@ -143,5 +143,22 @@ public class Hotel implements IDatosHotel {
 		reservaSeleccionada = reservas.get(codigoReserva);
 		return null;
 	}
+	
+	// MAREL
+	IDatosReserva registrarReserva(Cliente cliente, TipoHabitacion tipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean modificablePorHuesped) {
+		// assert tipos de habitacion por hotel
+		
+		long codigo = 1; //mock del codigo
+		Reserva reserva = new Reserva(codigo, fechaInicio, fechaFin, modificablePorHuesped);
+		reserva.registraTipoHabitacion(tipoHabitacion);
+		
+		// reservas del hotel
+		this.reservas.put(reserva.getCodigo(), reserva);
+		
+		// reservas del cliente
+		cliente.RegistrarReserva(reserva);
+		
+		return reserva;
+	}
 
 }
