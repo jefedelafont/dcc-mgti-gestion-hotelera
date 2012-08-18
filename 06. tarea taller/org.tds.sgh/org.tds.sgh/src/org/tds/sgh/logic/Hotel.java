@@ -161,17 +161,17 @@ public class Hotel implements IDatosHotel{
 		
 		Precondition.isTrue(this.confirmarDisponibilidad(tipoHabitacion.getNombre(), fechaInicio, fechaFin), "No hay disponibilidad");
 		
-		Reserva reserva = new Reserva(codigo, fechaInicio, fechaFin,
+		reservaSeleccionada = new Reserva(codigo, fechaInicio, fechaFin,
 				modificablePorHuesped);
-		reserva.registraTipoHabitacion(tipoHabitacion);
+		reservaSeleccionada.registraTipoHabitacion(tipoHabitacion);
 
 		// reservas del hotel
-		this.reservas.put(reserva.getCodigo(), reserva);
+		this.reservas.put(reservaSeleccionada.getCodigo(), reservaSeleccionada);
 
 		// reservas del cliente
-		cliente.RegistrarReserva(reserva);
+		cliente.RegistrarReserva(reservaSeleccionada);
 
-		IDatosReserva iDatosReserva = new ReservaDTO(reserva);
+		IDatosReserva iDatosReserva = new ReservaDTO(reservaSeleccionada);
 		return iDatosReserva;
 	}
 
@@ -184,6 +184,9 @@ public class Hotel implements IDatosHotel{
 	}
 
 	public IDatosHabitacion tomarReserva(long codigoReserva) {
+		if(reservaSeleccionada.getCodigo() != codigoReserva){
+			reservaSeleccionada = reservas.get(codigoReserva);
+		}
 		TipoHabitacion tipoHabitacion = reservaSeleccionada.getTipoHabitacion();
 		Habitacion habitacionLibre = buscarHabitacionDesocupada(tipoHabitacion);
 		IDatosHabitacion iDatosHabitacion = reservaSeleccionada
@@ -218,7 +221,7 @@ public class Hotel implements IDatosHotel{
 		}
 		return habitacionLibre;
 	}
-   //Nelson Yañez//
+   //Nelson Yaï¿½ez//
 	public IDatosHuesped registrarHuespedEnReservaSeleccionada(
 			long codigoReserva, String nombre2, String documento) {
 		return this.reservaSeleccionada.registarHuesped(nombre2, documento);
