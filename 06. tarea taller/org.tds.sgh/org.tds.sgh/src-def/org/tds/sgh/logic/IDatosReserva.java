@@ -17,4 +17,6 @@ public interface IDatosReserva
 	boolean isTomada();
 
 	boolean isCancelada();
+	
+	public IDatosTipoHabitacion getTipoHabitacion();
 }
