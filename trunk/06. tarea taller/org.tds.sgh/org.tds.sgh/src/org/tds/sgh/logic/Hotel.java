@@ -160,5 +160,14 @@ public class Hotel implements IDatosHotel {
 		
 		return reserva;
 	}
-
+	
+	public void confirmarReserva(long codigoReserva) {
+		for (Reserva reserva : reservas.values()) 
+		{
+			if (reserva.getCodigo() == codigoReserva && reserva.isPendiente()) {
+				reserva.estadoReserva =EstadoReserva.TOMADA;
+			}
+		}
+	}
+	
 }
