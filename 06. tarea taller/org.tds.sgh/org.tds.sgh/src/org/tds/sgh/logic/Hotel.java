@@ -206,4 +206,9 @@ public class Hotel implements IDatosHotel {
 		return habitacionLibre;
 	}
 	
+	//marel
+	public Map<Long, Reserva> listarReservasHotel() {
+		return this.reservas;
+	}	
+	
 }
