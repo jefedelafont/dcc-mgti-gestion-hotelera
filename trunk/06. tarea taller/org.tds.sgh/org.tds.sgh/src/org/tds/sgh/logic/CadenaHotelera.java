@@ -39,13 +39,13 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 		this.id = id;
 	}
 	
-//	private static CadenaHotelera instance;
-//
-//	public static CadenaHotelera getInstance() {
-//		if (instance == null)
-//			instance = new CadenaHotelera();
-//		return instance;
-//	}
+	private static CadenaHotelera instance;
+
+	public static CadenaHotelera getInstance() {
+		if (instance == null)
+			instance = new CadenaHotelera();
+		return instance;
+	}
 
 	private static long numeracionReservas = 0;
 
