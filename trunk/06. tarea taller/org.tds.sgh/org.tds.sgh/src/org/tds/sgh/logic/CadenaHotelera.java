@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.tds.sgh.dto.HotelDTO;
 import org.tds.sgh.dto.ReservaDTO;
@@ -42,7 +43,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	public CadenaHotelera() {
 		this.clientes = new HashMap<String, Cliente>();
 		this.hoteles = new HashMap<String, Hotel>();
-		this.tiposHabitacion = new HashMap<String, TipoHabitacion>();
+		this.tiposHabitacion = new TreeMap<String, TipoHabitacion>();
 	}
 
 	// IDatosCadenaHotelera ---------------------------------------------------
@@ -161,8 +162,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	@Override
 	public IDatosCliente registrarCliente(String nombre, String telefono,
 			String email) {
-		// Precondition.notContain(clientes, nombre,
-		// "Ya existe un cliente con el nombre '" + nombre + "'");
+		 Precondition.notContain(clientes, nombre,"Ya existe un cliente con el nombre '" + nombre + "'");
 
 		Cliente cliente = new Cliente(nombre, telefono, email);
 		clientes.put(nombre, cliente);
@@ -198,7 +198,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 		hotelEnUso = hoteles.get(nombreHotel);
 		
 		Precondition.isNotNull(hotelEnUso, "No existe el hotel propocionado " + nombreHotel);
-		Precondition.isNotNull(tiposHabitacion.get(nombreTipoHabitacion), "No existe el tipo de habitación propocionado " + nombreHotel);
+		Precondition.isNotNull(tiposHabitacion.get(nombreTipoHabitacion), "No existe el tipo de habitaciï¿½n propocionado " + nombreHotel);
 		Precondition.isTrue(fechaInicio.compareTo(fechaFin) < 0, "El rango de fechas propocionados incorrecto");
 		
 		return hotelEnUso.confirmarDisponibilidad(nombreTipoHabitacion,
@@ -232,18 +232,18 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 
 		numeracionReservas += 1;
 
-		Hotel hotel = this.hoteles.get(nombreHotel);
+		hotelEnUso = this.hoteles.get(nombreHotel);
 		Cliente cliente = this.clientes.get(nombreCliente);
 		TipoHabitacion tipoHabitacion = this.tiposHabitacion
 		.get(nombreTipoHabitacion);
 		
 		Precondition.isNotNull(cliente, "No existe el cliente proporcionado " + nombreCliente);
-		Precondition.isNotNull(hotel, "No existe el hotel proporcionado " + nombreHotel);
+		Precondition.isNotNull(hotelEnUso, "No existe el hotel proporcionado " + nombreHotel);
 		Precondition.isNotNull(tipoHabitacion, "No existe el tipo de habitacion" + nombreTipoHabitacion);
 		Precondition.isTrue(fechaInicio.compareTo(fechaFin) < 0, "El rango de fechas propocionados incorrecto");
 		
 
-		return hotel.registrarReserva(numeracionReservas, cliente,
+		return hotelEnUso.registrarReserva(numeracionReservas, cliente,
 				tipoHabitacion, fechaInicio, fechaFin, modificablePorHuesped);
 
 	}
