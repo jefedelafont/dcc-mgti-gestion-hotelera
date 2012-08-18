@@ -11,6 +11,13 @@ public class Reserva implements IDatosReserva {
 	EstadoReserva estadoReserva;
 	private TipoHabitacion tipoHabitacion;
 
+	public Reserva(long codigo, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean modificablePorHuesped) {
+		this.codigo = codigo;
+		this.fechaInicio = fechaInicio;
+		this.fechaFin = fechaFin;
+		this.isModificablePorHuesped = modificablePorHuesped;
+	}
+	
 	@Override
 	public long getCodigo() {
 		return this.codigo;
@@ -56,5 +63,9 @@ public class Reserva implements IDatosReserva {
 				&& fechaFin.after(fecha);
 		return estasEnFecha && !isTomada();
 	}
-
+	
+	public void registraTipoHabitacion(IDatosTipoHabitacion tipoHabitacion) {
+		this.tipoHabitacion = this.tipoHabitacion;
+	}
+	
 }
