@@ -10,93 +10,95 @@ import java.util.Map;
 
 import org.tds.sgh.dto.ReservaDTO;
 
-public class Hotel implements IDatosHotel
-{
+public class Hotel implements IDatosHotel {
 	// Atributos --------------------------------------------------------------
-	
+
 	private String nombre;
-	
-	private Map<String,Habitacion> habitaciones;
-	private List<Reserva> reservas;
-	
+	private Map<String, Habitacion> habitaciones;
+	private Map<Long, Reserva> reservas;
+	private Reserva reservaSeleccionada;
+	private Hotel hotelEnUso;
+
 	// Constructores ----------------------------------------------------------
-	
-	public Hotel(String nombre)
-	{
+
+	public Hotel(String nombre) {
 		this.nombre = nombre;
-		this.habitaciones = new HashMap<String,Habitacion>();
-		this.reservas = new ArrayList<Reserva>();
+		this.habitaciones = new HashMap<String, Habitacion>();
+		this.reservas = new HashMap<Long, Reserva>();
 	}
-	
-	
+
 	// IDatosHotel ------------------------------------------------------------
-	
+
 	@Override
-	public String getNombre()
-	{
+	public String getNombre() {
 		return nombre;
 	}
-	
-	
+
 	// Operaciones ------------------------------------------------------------
-	
-	Habitacion registrarHabitacion(TipoHabitacion tipoHabitacion, String nombre)
-	{
-		Precondition.notContain(habitaciones, nombre, "En el hotel '" + this.nombre + "' ya existe una habitaci�n con el nombre '" + nombre + "'");
-		
+
+	Habitacion registrarHabitacion(TipoHabitacion tipoHabitacion, String nombre) {
+		Precondition.notContain(habitaciones, nombre, "En el hotel '"
+				+ this.nombre + "' ya existe una habitaci�n con el nombre '"
+				+ nombre + "'");
+
 		Habitacion habitacion = new Habitacion(tipoHabitacion, nombre);
 		habitaciones.put(nombre, habitacion);
 		return habitacion;
 	}
-	
-	Map<String,IDatosHabitacion> listarHabitaciones()
-	{
-		return Collections.<String,IDatosHabitacion>unmodifiableMap(habitaciones);
+
+	Map<String, IDatosHabitacion> listarHabitaciones() {
+		return Collections
+				.<String, IDatosHabitacion> unmodifiableMap(habitaciones);
 	}
 
-	IDatosTipoHabitacion obtenerTipoHabitacionDeHabitacion(String nombreHabitacion)
-	{
+	IDatosTipoHabitacion obtenerTipoHabitacionDeHabitacion(
+			String nombreHabitacion) {
 		return habitaciones.get(nombreHabitacion).getTipoHabitacion();
 	}
-	
+
 	// MAREL
-	boolean confirmarDisponibilidad(String nombreTipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin) {
+	boolean confirmarDisponibilidad(String nombreTipoHabitacion,
+			GregorianCalendar fechaInicio, GregorianCalendar fechaFin) {
 		boolean res = true;
-		
-		int cantidadReservas = this.cantidadReservasTipoHabitacion(nombreTipoHabitacion, fechaInicio, fechaFin);
-		int cantidadaHabitaciones = this.cantidadHabitacionessTipoHabitacion(nombreTipoHabitacion);
-			
+
+		int cantidadReservas = this.cantidadReservasTipoHabitacion(
+				nombreTipoHabitacion, fechaInicio, fechaFin);
+		int cantidadaHabitaciones = this
+				.cantidadHabitacionessTipoHabitacion(nombreTipoHabitacion);
+
 		return cantidadaHabitaciones > cantidadReservas;
 	}
-	
+
 	// MAREL
-	private int cantidadReservasTipoHabitacion(String nombreTipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin) {		
+	private int cantidadReservasTipoHabitacion(String nombreTipoHabitacion,
+			GregorianCalendar fechaInicio, GregorianCalendar fechaFin) {
 		int res = 0;
-		
-		for ( Reserva reserva: reservas ) {
-			if ( reserva.getTipoHabitacion().getNombre().equals(nombreTipoHabitacion) && 
-					reserva.getFechaInicio().after(fechaInicio)&&
-					reserva.getFechaFin().before(fechaFin)){
-				res+=1;
+
+		for (Reserva reserva : reservas.values()) {
+			if (reserva.getTipoHabitacion().getNombre()
+					.equals(nombreTipoHabitacion)
+					&& reserva.getFechaInicio().after(fechaInicio)
+					&& reserva.getFechaFin().before(fechaFin)) {
+				res += 1;
 			}
 		}
-		
+
 		return res;
 	}
-	
+
 	// MAREL
 	private int cantidadHabitacionessTipoHabitacion(String nombreTipoHabitacion) {
 		int res = 0;
-		
+
 		for (Habitacion habitacion : habitaciones.values()) {
 			if (habitacion.getTipoHabitacion().equals(nombreTipoHabitacion)) {
 				res += 1;
 			}
 		}
-		
+
 		return res;
 	}
-	
+
 	// MAREL
 	public List<IDatosHotel> sugerirAlternativas(String nombreTipoHabitacion,
 			GregorianCalendar fechaInicio, GregorianCalendar fechaFin) {
@@ -113,28 +115,33 @@ public class Hotel implements IDatosHotel
 		return null;
 	}
 
-
-	
 	/**
-     * Alvaro Jose Peralta Ocampo
-     *
-     * @param fecha
-     * @return
-     */
-    public List<IDatosReserva> buscarReservasNoTomadas(GregorianCalendar fecha) {
-            List<IDatosReserva> datosReservas = new ArrayList<IDatosReserva>();
-            Iterator<Reserva> iterReservas = reservas.iterator();
-            while (iterReservas.hasNext()) {
-                    Reserva reserva = iterReservas.next();
-                    boolean enFechayNoTomada = reserva.estasEnFechayNoTomada(fecha);
-                    if (enFechayNoTomada) {
-                            IDatosReserva iDatosReserva = new ReservaDTO(reserva);
-                            datosReservas.add(iDatosReserva);
-                    }
-            }
-            return datosReservas;
-    }
+	 * Alvaro Jose Peralta Ocampo
+	 * 
+	 * @param fecha
+	 * @return
+	 */
+	public List<IDatosReserva> buscarReservasNoTomadas(GregorianCalendar fecha) {
+		List<IDatosReserva> datosReservas = new ArrayList<IDatosReserva>();
+		for (Reserva reserva : reservas.values()) {
+			boolean enFechayNoTomada = reserva.estasEnFechayNoTomada(fecha);
+			if (enFechayNoTomada) {
+				IDatosReserva iDatosReserva = new ReservaDTO(reserva);
+				datosReservas.add(iDatosReserva);
+			}
+		}
+		return datosReservas;
+	}
 
-	
+	/**
+	 * alvaro jose peralta ocampo
+	 * 
+	 * @param codigoReserva
+	 * @return
+	 */
+	public IDatosReserva seleccionarReserva(long codigoReserva) {
+		reservaSeleccionada = reservas.get(codigoReserva);
+		return null;
+	}
 
 }
