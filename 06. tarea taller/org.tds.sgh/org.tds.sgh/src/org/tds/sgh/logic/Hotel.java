@@ -18,7 +18,6 @@ public class Hotel implements IDatosHotel {
 	private Map<String, Habitacion> habitaciones;
 	private Map<Long, Reserva> reservas;
 	private Reserva reservaSeleccionada;
-	private Hotel hotelEnUso;
 	
 
 	// Constructores ----------------------------------------------------------
@@ -93,7 +92,7 @@ public class Hotel implements IDatosHotel {
 		int res = 0;
 
 		for (Habitacion habitacion : habitaciones.values()) {
-			if (habitacion.getTipoHabitacion().equals(nombreTipoHabitacion)) {
+			if (habitacion.getTipoHabitacion().getNombre().equals(nombreTipoHabitacion)) {
 				res += 1;
 			}
 		}
@@ -143,7 +142,8 @@ public class Hotel implements IDatosHotel {
 	 */
 	public IDatosReserva seleccionarReserva(long codigoReserva) {
 		reservaSeleccionada = reservas.get(codigoReserva);
-		return null;
+		IDatosReserva iDatosReserva = new ReservaDTO(reservaSeleccionada);
+		return iDatosReserva;
 	}
 	
 	// MAREL
