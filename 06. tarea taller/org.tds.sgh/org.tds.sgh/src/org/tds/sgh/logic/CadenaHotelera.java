@@ -173,16 +173,8 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 			String nombreTipoHabitacion, GregorianCalendar fechaInicio,
 			GregorianCalendar fechaFin) {
 		
-		boolean res = false;
-		
 		Hotel hotel = hoteles.get(nombreHotel);
-		
-		TipoHabitacion tipoHabitacion = tiposHabitacion.get(nombreTipoHabitacion);
-		
-		
-		
-		return res;
-		
+		return hotel.confirmarDisponibilidad(nombreTipoHabitacion, fechaInicio, fechaFin);
 	}
 
 
