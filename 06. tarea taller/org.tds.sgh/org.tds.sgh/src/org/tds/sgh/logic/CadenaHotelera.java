@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.tds.sgh.dto.HotelDTO;
+
 public class CadenaHotelera implements IDatosCadenaHotelera,
                                        IAltaHotelController,
                                        IAltaClienteController,
@@ -175,8 +177,16 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	@Override
 	public List<IDatosHotel> sugerirAlternativas(String nombreTipoHabitacion,
 			GregorianCalendar fechaInicio, GregorianCalendar fechaFin) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<IDatosHotel> hotelesDTO = new ArrayList<IDatosHotel>(); 
+		
+		for ( Hotel hotel : hoteles.values() ) {
+			if ( hotel.confirmarDisponibilidad(nombreTipoHabitacion, fechaInicio, fechaFin) ) {
+				hotelesDTO.add(new HotelDTO(hotel));
+			}
+		}
+		
+		return hotelesDTO;
 	}
 
 
@@ -185,7 +195,9 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 			String nombreHotel, String nombreTipoHabitacion,
 			GregorianCalendar fechaInicio, GregorianCalendar fechaFin,
 			boolean modificablePorHuesped) {
-		// TODO Auto-generated method stub
+		
+		Hotel hotel = hoteles.get(nombreHotel);
+		
 		return null;
 	}
 
