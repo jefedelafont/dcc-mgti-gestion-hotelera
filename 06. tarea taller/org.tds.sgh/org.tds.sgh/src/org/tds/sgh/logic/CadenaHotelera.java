@@ -82,11 +82,19 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 		return null;
 	}
 	
+	// MAREL
 	@Override
 	public Map<Long, IDatosReserva> listarReservasHotel(String nombreHotel)
 	{
-		//TODO
-		return null;
+		Hotel hotel = this.hoteles.get(nombreHotel);
+		Map<Long, IDatosReserva> res = new HashMap<Long, IDatosReserva>();
+		
+		//Long, Reserva
+		for ( Reserva reserva : hotel.listarReservasHotel().values() ) {
+			res.put(reserva.getCodigo(), reserva);
+		}
+		
+		return res;
 	}
 	
 	@Override
@@ -151,7 +159,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	@Override
 	public IDatosCliente registrarCliente(String nombre, String telefono, String email)
 	{
-		Precondition.notContain(clientes, nombre, "Ya existe un cliente con el nombre '" + nombre + "'");
+		//Precondition.notContain(clientes, nombre, "Ya existe un cliente con el nombre '" + nombre + "'");
 		
 		Cliente cliente = new Cliente(nombre, telefono, email);
 		clientes.put(nombre, cliente);
