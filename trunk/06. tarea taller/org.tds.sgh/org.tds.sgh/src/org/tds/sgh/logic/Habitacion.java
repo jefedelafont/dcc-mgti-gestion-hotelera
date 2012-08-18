@@ -34,4 +34,9 @@ public class Habitacion implements IDatosHabitacion
 	{
 		return this.tipoHabitacion;
 	}
+
+
+	public boolean eresDelTIpo(TipoHabitacion tipoHabitacion) {
+		return this.tipoHabitacion.equals(tipoHabitacion);
+	}
 }

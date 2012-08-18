@@ -1,13 +1,14 @@
 package org.tds.sgh.logic;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.tds.sgh.dto.HabitacionDTO;
 import org.tds.sgh.dto.ReservaDTO;
 
 public class Hotel implements IDatosHotel {
@@ -18,6 +19,7 @@ public class Hotel implements IDatosHotel {
 	private Map<Long, Reserva> reservas;
 	private Reserva reservaSeleccionada;
 	private Hotel hotelEnUso;
+	
 
 	// Constructores ----------------------------------------------------------
 
@@ -167,6 +169,41 @@ public class Hotel implements IDatosHotel {
 				reserva.estadoReserva =EstadoReserva.TOMADA;
 			}
 		}
+	}
+	
+	public IDatosHabitacion tomarReserva(long codigoReserva) {
+		TipoHabitacion tipoHabitacion = reservaSeleccionada.getTipoHabitacion();
+		Habitacion habitacionLibre = buscarHabitacionDesocupada(tipoHabitacion);
+		IDatosHabitacion iDatosHabitacion = reservaSeleccionada.tomarReserva(habitacionLibre);
+		return iDatosHabitacion;
+	}
+
+	private Habitacion buscarHabitacionDesocupada(TipoHabitacion tipoHabitacion) {
+		Habitacion habitacionLibre = null;
+		Collection<Reserva> reservasEnRango = new ArrayList<Reserva>();
+		for(Reserva reserva : reservas.values()){
+			boolean estasEnRango = reserva.estasEnRango(reservaSeleccionada);
+			if(estasEnRango){
+				reservasEnRango.add(reserva);
+			}
+		}
+		
+		boolean habitacionOcupada = false;
+		for(Habitacion habitacion:habitaciones.values()){
+			boolean eresDelTipo = habitacion.eresDelTIpo(tipoHabitacion);
+			if(eresDelTipo){
+				for(Reserva reserva : reservasEnRango){
+					if(reserva.esTuHabitacion(habitacion)){
+						habitacionOcupada = true;
+					}
+				}
+				if(!habitacionOcupada){
+					habitacionLibre = habitacion;
+					break;
+				}
+			}
+		}
+		return habitacionLibre;
 	}
 	
 }
