@@ -157,9 +157,10 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	}
 
 
+	// MAREL
 	@Override
 	public void confirmarReserva(long codigoReserva) {
-		// TODO Auto-generated method stub
+		hotelEnUso.confirmarReserva(codigoReserva);
 		
 	}
 
