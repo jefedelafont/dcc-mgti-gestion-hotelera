@@ -75,6 +75,8 @@ public class Cliente implements IDatosCliente
 
 	
 	// Operaciones ------------------------------------------------------------
-
+	public void RegistrarReserva(Reserva reserva) {
+		this.reservas.put(reserva.getCodigo(), reserva);
+	}
 	
 }
