@@ -15,7 +15,7 @@ public class BaseTest
 	
 	protected CadenaHotelera createCadenaHotelera()
 	{
-		return CadenaHotelera.getInstance();
+		return new CadenaHotelera();
 	}
 	
 	
