@@ -5,12 +5,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapKey;
+import javax.persistence.OneToMany;
 
 import org.tds.sgh.dto.ReservaDTO;
+
+
 
 @Entity
 public class Cliente implements IDatosCliente {
@@ -21,6 +27,11 @@ public class Cliente implements IDatosCliente {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public long getId() {
 		return this.id;
+	}
+	@OneToMany(cascade=CascadeType.ALL)
+	@MapKey(name="codigo")
+	public Map<Long, Reserva> getReservas() {
+		return reservas;
 	}
 
 	protected void setId(long id) {
@@ -36,6 +47,10 @@ public class Cliente implements IDatosCliente {
 	private Map<Long, Reserva> reservas;
 
 	// Constructor ------------------------------------------------------------
+
+	public void setReservas(Map<Long, Reserva> reservas) {
+		this.reservas = reservas;
+	}
 
 	public Cliente(String nombre, String telefono, String email) {
 		this.nombre = nombre;
@@ -85,8 +100,6 @@ public class Cliente implements IDatosCliente {
 		this.reservas.put(reserva.getCodigo(), reserva);
 	}
 
-	public Map<Long, Reserva> getReservas() {
-		return reservas;
-	}
+
 
 }
