@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.tds.sgh.dto.HotelDTO;
 import org.tds.sgh.dto.ReservaDTO;
-import org.tds.sgh.dto.TiposHabitacionDTO;
+import org.tds.sgh.dto.TipoHabitacionDTO;
 import org.tds.sgh.logic.Precondition.PreconditionException;
 
 public class CadenaHotelera implements IDatosCadenaHotelera,
@@ -91,7 +91,7 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 
 		// Long, Reserva
 		for (Reserva reserva : hotel.listarReservasHotel().values()) {
-			res.put(reserva.getCodigo(), reserva);
+			res.put(reserva.getCodigo(), new ReservaDTO(reserva));
 		}
 
 		return res;
@@ -112,12 +112,12 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	 */
 	@Override
 	public IDatosTipoHabitacion obtenerTipoHabitacionDeReserva(long codigo) {
-		IDatosTipoHabitacion  res = new TiposHabitacionDTO(null);
+		IDatosTipoHabitacion  res = new TipoHabitacionDTO(null);
 		
 		for (Hotel hotel : this.hoteles.values()) {
 			for ( Reserva reserva : hotel.listarReservasHotel().values() ) {
 				if ( reserva.getCodigo() == codigo ) {
-					res = new TiposHabitacionDTO(reserva.getTipoHabitacion());
+					res = new TipoHabitacionDTO(reserva.getTipoHabitacion());
 				}
 			}
 		}
