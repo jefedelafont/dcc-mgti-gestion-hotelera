@@ -27,7 +27,7 @@ public class ControllerFactory
 	public static ICancelarReservaController CancelarReservaController(CadenaHotelera ch)
 	{
 		// TODO
-		return ch;
+		return null;
 	}
 
 	public static IIdentificarClienteController IdentificarClienteController(CadenaHotelera ch)
