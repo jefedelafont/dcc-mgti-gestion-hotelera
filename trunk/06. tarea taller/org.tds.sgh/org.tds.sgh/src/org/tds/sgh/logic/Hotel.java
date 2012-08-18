@@ -224,6 +224,9 @@ public class Hotel implements IDatosHotel{
    //Nelson Ya�ez//
 	public IDatosHuesped registrarHuespedEnReservaSeleccionada(
 			long codigoReserva, String nombre2, String documento) {
+		if(reservaSeleccionada.getCodigo() != codigoReserva){
+			reservaSeleccionada = reservas.get(codigoReserva);
+		}
 		return this.reservaSeleccionada.registarHuesped(nombre2, documento);
 	}
 
