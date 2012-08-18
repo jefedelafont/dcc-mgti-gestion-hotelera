@@ -254,11 +254,9 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 		return null;
 	}
 
-
 	@Override
-	public IDatosHabitacion tomarReserva(long codigoReserva) {
-		// TODO Auto-generated method stub
-		return null;
+	public IDatosHabitacion tomarReserva(long codigoReserva) { 
+		return  hotelEnUso.tomarReserva(codigoReserva);
 	}
 	
 	/**
@@ -280,3 +278,4 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 		return clis;
 	}
 }
+
