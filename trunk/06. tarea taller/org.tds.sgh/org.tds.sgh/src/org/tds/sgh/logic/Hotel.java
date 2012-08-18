@@ -145,10 +145,9 @@ public class Hotel implements IDatosHotel {
 	}
 	
 	// MAREL
-	IDatosReserva registrarReserva(Cliente cliente, TipoHabitacion tipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean modificablePorHuesped) {
+	IDatosReserva registrarReserva(long codigo, Cliente cliente, TipoHabitacion tipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean modificablePorHuesped) {
 		// assert tipos de habitacion por hotel
 		
-		long codigo = 1; //mock del codigo
 		Reserva reserva = new Reserva(codigo, fechaInicio, fechaFin, modificablePorHuesped);
 		reserva.registraTipoHabitacion(tipoHabitacion);
 		

@@ -27,6 +27,8 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 		return instance;
 	}
 	
+	private static long numeracionReservas = 0;
+	
 	// Atributos --------------------------------------------------------------
 	
 	private Map<String,Cliente> clientes;
@@ -206,11 +208,13 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 			GregorianCalendar fechaInicio, GregorianCalendar fechaFin,
 			boolean modificablePorHuesped) {
 		
+		numeracionReservas+= 1;
+		
 		Hotel hotel = this.hoteles.get(nombreHotel);
 		Cliente cliente = this.clientes.get(nombreCliente);
 		TipoHabitacion tipoHabitacion = this.tiposHabitacion.get(nombreTipoHabitacion);
 		
-		return hotel.registrarReserva(cliente, tipoHabitacion, fechaInicio, fechaFin, modificablePorHuesped);
+		return hotel.registrarReserva(numeracionReservas, cliente, tipoHabitacion, fechaInicio, fechaFin, modificablePorHuesped);
 
 	}
 
