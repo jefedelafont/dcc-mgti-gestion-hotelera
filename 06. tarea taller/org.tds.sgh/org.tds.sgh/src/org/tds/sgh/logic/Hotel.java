@@ -18,7 +18,6 @@ public class Hotel implements IDatosHotel {
 	private Map<String, Habitacion> habitaciones;
 	private Map<Long, Reserva> reservas;
 	private Reserva reservaSeleccionada;
-	
 
 	// Constructores ----------------------------------------------------------
 
@@ -78,8 +77,8 @@ public class Hotel implements IDatosHotel {
 		for (Reserva reserva : reservas.values()) {
 			if (reserva.getTipoHabitacion().getNombre()
 					.equals(nombreTipoHabitacion)
-					&& reserva.getFechaInicio().after(fechaInicio)
-					&& reserva.getFechaFin().before(fechaFin)) {
+					&& fechaInicio.compareTo(reserva.getFechaFin()) < 0
+					&& fechaFin.compareTo(reserva.getFechaInicio()) > 0) {
 				res += 1;
 			}
 		}
@@ -92,7 +91,8 @@ public class Hotel implements IDatosHotel {
 		int res = 0;
 
 		for (Habitacion habitacion : habitaciones.values()) {
-			if (habitacion.getTipoHabitacion().getNombre().equals(nombreTipoHabitacion)) {
+			if (habitacion.getTipoHabitacion().getNombre()
+					.equals(nombreTipoHabitacion)) {
 				res += 1;
 			}
 		}
@@ -145,59 +145,62 @@ public class Hotel implements IDatosHotel {
 		IDatosReserva iDatosReserva = new ReservaDTO(reservaSeleccionada);
 		return iDatosReserva;
 	}
-	
+
 	// MAREL
-	IDatosReserva registrarReserva(long codigo, Cliente cliente, TipoHabitacion tipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean modificablePorHuesped) {
+	IDatosReserva registrarReserva(long codigo, Cliente cliente,
+			TipoHabitacion tipoHabitacion, GregorianCalendar fechaInicio,
+			GregorianCalendar fechaFin, boolean modificablePorHuesped) {
 		// assert tipos de habitacion por hotel
-		
-		Reserva reserva = new Reserva(codigo, fechaInicio, fechaFin, modificablePorHuesped);
+
+		Reserva reserva = new Reserva(codigo, fechaInicio, fechaFin,
+				modificablePorHuesped);
 		reserva.registraTipoHabitacion(tipoHabitacion);
-		
+
 		// reservas del hotel
 		this.reservas.put(reserva.getCodigo(), reserva);
-		
+
 		// reservas del cliente
 		cliente.RegistrarReserva(reserva);
-		
+
 		return reserva;
 	}
-	
+
 	public void confirmarReserva(long codigoReserva) {
-		for (Reserva reserva : reservas.values()) 
-		{
+		for (Reserva reserva : reservas.values()) {
 			if (reserva.getCodigo() == codigoReserva && reserva.isPendiente()) {
-				reserva.estadoReserva =EstadoReserva.TOMADA;
+				reserva.estadoReserva = EstadoReserva.TOMADA;
 			}
 		}
 	}
-	
+
 	public IDatosHabitacion tomarReserva(long codigoReserva) {
 		TipoHabitacion tipoHabitacion = reservaSeleccionada.getTipoHabitacion();
 		Habitacion habitacionLibre = buscarHabitacionDesocupada(tipoHabitacion);
-		IDatosHabitacion iDatosHabitacion = reservaSeleccionada.tomarReserva(habitacionLibre);
+		IDatosHabitacion iDatosHabitacion = reservaSeleccionada
+				.tomarReserva(habitacionLibre);
 		return iDatosHabitacion;
 	}
 
 	private Habitacion buscarHabitacionDesocupada(TipoHabitacion tipoHabitacion) {
 		Habitacion habitacionLibre = null;
 		Collection<Reserva> reservasEnRango = new ArrayList<Reserva>();
-		for(Reserva reserva : reservas.values()){
+		for (Reserva reserva : reservas.values()) {
 			boolean estasEnRango = reserva.estasEnRango(reservaSeleccionada);
-			if(estasEnRango){
+			if (estasEnRango) {
 				reservasEnRango.add(reserva);
 			}
 		}
-		
+
 		boolean habitacionOcupada = false;
-		for(Habitacion habitacion:habitaciones.values()){
+		for (Habitacion habitacion : habitaciones.values()) {
 			boolean eresDelTipo = habitacion.eresDelTIpo(tipoHabitacion);
-			if(eresDelTipo){
-				for(Reserva reserva : reservasEnRango){
-					if(reserva.esTuHabitacion(habitacion)){
+			if (eresDelTipo) {
+				for (Reserva reserva : reservasEnRango) {
+					if (reserva.esTuHabitacion(habitacion)) {
 						habitacionOcupada = true;
 					}
 				}
-				if(!habitacionOcupada){
+				if (!habitacionOcupada) {
 					habitacionLibre = habitacion;
 					break;
 				}
@@ -205,7 +208,12 @@ public class Hotel implements IDatosHotel {
 		}
 		return habitacionLibre;
 	}
-	
+
+	public IDatosHuesped registrarHuespedEnReservaSeleccionada(
+			long codigoReserva, String nombre2, String documento) {
+		return this.reservaSeleccionada.registarHuesped(nombre2, documento);
+	}
+
 	//marel
 	public Map<Long, Reserva> listarReservasHotel() {
 		return this.reservas;
