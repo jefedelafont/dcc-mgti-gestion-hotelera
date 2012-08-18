@@ -1,0 +1,205 @@
+package org.tds.sgh.logic;
+
+import java.util.Collections;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class CadenaHotelera implements IDatosCadenaHotelera,
+                                       IAltaHotelController,
+                                       IAltaClienteController,
+                                       IIdentificarClienteController,
+                                       IHacerReservaController
+                                       
+                                       
+{
+	// Atributos --------------------------------------------------------------
+	
+	private Map<String,Cliente> clientes;
+	
+	private Map<String,Hotel> hoteles;
+	
+	private Map<String,TipoHabitacion> tiposHabitacion;
+	
+
+	// Constructores ----------------------------------------------------------
+
+	public CadenaHotelera()
+	{
+		this.clientes = new HashMap<String,Cliente>();
+		this.hoteles = new HashMap<String,Hotel>();
+		this.tiposHabitacion = new HashMap<String,TipoHabitacion>();
+	}
+	
+
+	// IDatosCadenaHotelera ---------------------------------------------------
+	
+	@Override
+	public Map<String,IDatosCliente> listarClientes()
+	{
+		return Collections.<String,IDatosCliente>unmodifiableMap(clientes);
+	}
+	
+	@Override
+	public Map<String,IDatosHotel> listarHoteles()
+	{
+		return Collections.<String,IDatosHotel>unmodifiableMap(hoteles);
+	}
+	
+	@Override
+	public Map<String,IDatosTipoHabitacion> listarTiposHabitacion()
+	{
+		return Collections.<String,IDatosTipoHabitacion>unmodifiableMap(tiposHabitacion);
+	}
+	
+	@Override
+	public Map<String,IDatosHabitacion> listarHabitaciones(String nombreHotel)
+	{
+		Precondition.contains(hoteles, nombreHotel, "El hotel '" + nombreHotel + "' no está registrado");
+		return hoteles.get(nombreHotel).listarHabitaciones();
+	}
+
+	@Override
+	public Map<Long,IDatosReserva> listarReservasCliente(String nombreCliente)
+	{
+		//TODO
+		return null;
+	}
+	
+	@Override
+	public Map<Long, IDatosReserva> listarReservasHotel(String nombreHotel)
+	{
+		//TODO
+		return null;
+	}
+	
+	@Override
+	public IDatosTipoHabitacion obtenerTipoHabitacionDeHabitacion(String nombreHotel, String nombreHabitacion)
+	{
+		Precondition.contains(hoteles, nombreHotel, "El hotel '" + nombreHotel + "' no está registrado");
+		return hoteles.get(nombreHotel).obtenerTipoHabitacionDeHabitacion(nombreHabitacion);
+	}
+
+	@Override
+	public IDatosTipoHabitacion obtenerTipoHabitacionDeReserva(long codigo)
+	{
+		//TODO
+		return null;
+	}
+
+	@Override
+	public IDatosHabitacion obtenerHabitacionDeReserva(long codigo)
+	{
+		//TODO
+		return null;
+	}
+	
+	
+	// IAltaHotel -------------------------------------------------------------
+	
+	@Override
+	public IDatosHotel registrarHotel(String nombre)
+	{
+		Precondition.notContain(hoteles, nombre, "Ya existe un hotel con el nombre '" + nombre + "'");
+		
+		Hotel h = new Hotel(nombre);
+		hoteles.put(nombre, h);
+		return h;
+	}
+	
+	@Override
+	public IDatosTipoHabitacion registrarTipoHabitacion(String nombre)
+	{
+		Precondition.notContain(tiposHabitacion, nombre, "Ya existe un tipo de habitación con el nombre '" + nombre + "'");
+		
+		TipoHabitacion tipoHabitacion = new TipoHabitacion(nombre);
+		tiposHabitacion.put(nombre, tipoHabitacion);
+		return tipoHabitacion;
+	}
+	
+	@Override
+	public IDatosHabitacion registrarHabitacion(String nombreHotel, String nombreTipoHabitacion, String nombre)
+	{
+		Precondition.contains(hoteles, nombreHotel, "No existe un hotel con el nombre '" + nombreHotel + "'");
+		Precondition.contains(tiposHabitacion, nombreTipoHabitacion, "No existe un tipo de habitación con el nombre '" + nombreTipoHabitacion + "'");
+		
+		Hotel hotel = hoteles.get(nombreHotel);
+		TipoHabitacion tipoHabitacion = tiposHabitacion.get(nombreTipoHabitacion);
+		
+		return hotel.registrarHabitacion(tipoHabitacion, nombre);
+	}
+	
+
+	// IAltaCliente -----------------------------------------------------------
+	
+	@Override
+	public IDatosCliente registrarCliente(String nombre, String telefono, String email)
+	{
+		Precondition.notContain(clientes, nombre, "Ya existe un cliente con el nombre '" + nombre + "'");
+		
+		Cliente cliente = new Cliente(nombre, telefono, email);
+		clientes.put(nombre, cliente);
+		return cliente;
+	}
+
+
+	@Override
+	public List<IDatosCliente> buscarCliente(String nombreRegex)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public IDatosCliente seleccionarCliente(String nombre)
+	{
+		Cliente c = clientes.get(nombre);
+		IDatosCliente dc = c.export();
+		return dc;
+	}
+
+
+	@Override
+	public void confirmarReserva(long codigoReserva) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public boolean confirmarDisponibilidad(String nombreHotel,
+			String nombreTipoHabitacion, GregorianCalendar fechaInicio,
+			GregorianCalendar fechaFin) {
+		
+		boolean res = false;
+		
+		Hotel hotel = hoteles.get(nombreHotel);
+		
+		TipoHabitacion tipoHabitacion = tiposHabitacion.get(nombreTipoHabitacion);
+		
+		
+		
+		return res;
+		
+	}
+
+
+	@Override
+	public List<IDatosHotel> sugerirAlternativas(String nombreTipoHabitacion,
+			GregorianCalendar fechaInicio, GregorianCalendar fechaFin) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public IDatosReserva registrarReserva(String nombreCliente,
+			String nombreHotel, String nombreTipoHabitacion,
+			GregorianCalendar fechaInicio, GregorianCalendar fechaFin,
+			boolean modificablePorHuesped) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}
