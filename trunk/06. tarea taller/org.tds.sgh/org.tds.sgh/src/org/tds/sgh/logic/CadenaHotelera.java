@@ -7,18 +7,34 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import org.tds.sgh.dto.HotelDTO;
 import org.tds.sgh.dto.ReservaDTO;
 import org.tds.sgh.dto.TipoHabitacionDTO;
 import org.tds.sgh.logic.Precondition.PreconditionException;
 
+@Entity
 public class CadenaHotelera implements IDatosCadenaHotelera,
 		IAltaHotelController, IAltaClienteController,
 		IIdentificarClienteController, IHacerReservaController,
 		ITomarReservaController, ICancelarReservaController
 
 {
+	private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public long getId() {
+		return this.id;
+	}
 
+	protected void setId(long id) {
+		this.id = id;
+	}
+	
 	private static CadenaHotelera instance;
 
 	public static CadenaHotelera getInstance() {
