@@ -151,7 +151,9 @@ public class Hotel implements IDatosHotel{
 		return iDatosReserva;
 	}
 
-	// MAREL
+	/**
+	 * marel
+	 */
 	public IDatosReserva registrarReserva(long codigo, Cliente cliente,
 			TipoHabitacion tipoHabitacion, GregorianCalendar fechaInicio,
 			GregorianCalendar fechaFin, boolean modificablePorHuesped) {
@@ -225,6 +227,21 @@ public class Hotel implements IDatosHotel{
 	// marel
 	public Map<Long, Reserva> listarReservasHotel() {
 		return this.reservas;
+	}
+	
+	// marel
+	public void cancelarReserva(long codigoReserva) {
+		Reserva reserva = reservas.get(codigoReserva);
+		
+		Precondition.isNotNull(reserva, "No existe la reserva");
+		Precondition.isTrue(reserva.isPendiente(),"El estado de la reserva debe ser pendiente");
+		
+		reserva.estadoReserva = EstadoReserva.CANCELADA;
+	}
+	
+	// marel
+	public boolean containsReserva(long codigoReserva) {
+		return this.reservas.containsKey(codigoReserva);
 	}
 
 }
