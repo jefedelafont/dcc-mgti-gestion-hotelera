@@ -85,7 +85,11 @@ public class Hotel implements IDatosHotel
 		return null;
 	}
 
-
+	/**
+	 * Alvaro Jose Peralta Ocampo
+	 * @param fecha
+	 * @return
+	 */
 	public List<IDatosReserva> buscarReservasNoTomadas(GregorianCalendar fecha) {
 		List<IDatosReserva> datosReservas = new ArrayList<IDatosReserva>();
 		Iterator<Reserva> iterReservas = reservas.iterator();
@@ -93,7 +97,7 @@ public class Hotel implements IDatosHotel
 			Reserva reserva = iterReservas.next();
 			boolean enFechayNoTomada = reserva.estasEnFechayNoTomada(fecha);
 			if(enFechayNoTomada){
-				IDatosReserva iDatosReserva = new ReservaDTO();
+				IDatosReserva iDatosReserva = new ReservaDTO(reserva);
 				
 			}
 		}
