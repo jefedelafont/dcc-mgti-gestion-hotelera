@@ -1,5 +1,6 @@
 package org.tds.sgh.logic;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -146,14 +147,6 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 
 
 	@Override
-	public List<IDatosCliente> buscarCliente(String nombreRegex)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
 	public IDatosCliente seleccionarCliente(String nombre)
 	{
 		Cliente c = clientes.get(nombre);
@@ -234,5 +227,24 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 	public IDatosHabitacion tomarReserva(long codigoReserva) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	/**
+	 * Nelson Yanez
+	 */
+	public List<IDatosCliente> buscarCliente(String nombreRegex)
+	{
+		//**restona los datos de cliente que cumplen con contener tring nombreRegex **//
+		List<IDatosCliente> clis = new ArrayList<IDatosCliente>();
+			
+		for(Cliente cli:this.clientes.values())
+		{
+			if (cli.getNombre().matches(nombreRegex)) {
+		
+				clis.add(new DatosCliente(cli.getNombre(), cli.getTelefono(),cli.getEMail()));
+				}
+			
+		}
+		return clis;
 	}
 }
