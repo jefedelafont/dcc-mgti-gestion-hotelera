@@ -214,7 +214,7 @@ public class Hotel implements IDatosHotel{
 		}
 		return habitacionLibre;
 	}
-
+   //Nelson Yañez//
 	public IDatosHuesped registrarHuespedEnReservaSeleccionada(
 			long codigoReserva, String nombre2, String documento) {
 		return this.reservaSeleccionada.registarHuesped(nombre2, documento);

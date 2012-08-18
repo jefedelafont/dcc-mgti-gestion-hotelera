@@ -2,6 +2,9 @@ package org.tds.sgh.dto;
 
 import org.tds.sgh.logic.Huesped;
 import org.tds.sgh.logic.IDatosHuesped;
+/*
+ * Nelson
+ */
 
 public class HuespedDTO implements IDatosHuesped{
 

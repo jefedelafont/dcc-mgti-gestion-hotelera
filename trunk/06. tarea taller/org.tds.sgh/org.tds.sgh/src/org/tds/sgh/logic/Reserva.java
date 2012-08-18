@@ -16,6 +16,7 @@ public class Reserva {
 	EstadoReserva estadoReserva;
 	private TipoHabitacion tipoHabitacion;
 	private Habitacion habitacion;
+	//nelson Yañez//
 	private List<Huesped> huespedes;
 	
 	
@@ -93,7 +94,7 @@ public class Reserva {
 		IDatosHabitacion iDatosHabitacion = new HabitacionDTO(habitacionLibre);
 		return iDatosHabitacion;
 	}
-
+     //neslon yañez//
 	public IDatosHuesped registarHuesped(String nombre2, String documento) {
 		Huesped huesped = new Huesped(nombre2,documento);
 		huespedes.add(huesped);
