@@ -8,12 +8,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapKey;
+import javax.persistence.OneToMany;
 
-import org.tds.sgh.dto.HabitacionDTO;
 import org.tds.sgh.dto.ReservaDTO;
 import org.tds.sgh.dto.TipoHabitacionDTO;
 
@@ -38,7 +40,27 @@ public class Hotel implements IDatosHotel{
 	private Map<Long, Reserva> reservas;
 	private Reserva reservaSeleccionada;
 
+	
+	
 	// Constructores ----------------------------------------------------------
+
+	@OneToMany(cascade=CascadeType.ALL)
+	@MapKey(name="nombre")
+	public Map<String, Habitacion> getHabitaciones() {
+		return habitaciones;
+	}
+	public void setHabitaciones(Map<String, Habitacion> habitaciones) {
+		this.habitaciones = habitaciones;
+	}
+	@OneToMany(cascade=CascadeType.ALL)
+	@MapKey(name="codigo")
+	public Map<Long, Reserva> getReservas() {
+		return reservas;
+	}
+	
+	public void setReservas(Map<Long, Reserva> reservas) {
+		this.reservas = reservas;
+	}
 
 	public Hotel(String nombre) {
 		this.nombre = nombre;
