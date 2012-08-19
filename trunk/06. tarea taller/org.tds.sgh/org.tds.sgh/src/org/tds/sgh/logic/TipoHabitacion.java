@@ -38,4 +38,10 @@ public class TipoHabitacion implements IDatosTipoHabitacion
 	{
 		return this.nombre;
 	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	
+	
 }

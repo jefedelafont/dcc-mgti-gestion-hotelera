@@ -47,7 +47,9 @@ public class Cliente implements IDatosCliente {
 	private Map<Long, Reserva> reservas;
 
 	// Constructor ------------------------------------------------------------
-
+	public Cliente(){
+		this.reservas = new HashMap<Long, Reserva>();
+	}
 	public void setReservas(Map<Long, Reserva> reservas) {
 		this.reservas = reservas;
 	}
@@ -69,9 +71,7 @@ public class Cliente implements IDatosCliente {
 		return telefono;
 	}
 
-	public String getEMail() {
-		return email;
-	}
+	
 
 	public IDatosCliente export() {
 		DatosCliente dc = new DatosCliente(this.nombre, this.telefono,
@@ -100,6 +100,20 @@ public class Cliente implements IDatosCliente {
 		this.reservas.put(reserva.getCodigo(), reserva);
 	}
 
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+	
+	public String getEMail() {
+		return email;
+	}
+
+	public void setEMail(String email) {
+		this.email = email;
+	}
 
 
 }

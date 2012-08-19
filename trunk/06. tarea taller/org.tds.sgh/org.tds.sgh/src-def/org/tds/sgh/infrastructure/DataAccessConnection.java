@@ -40,6 +40,7 @@ public class DataAccessConnection
 	public void commitTx() 
 	{
 		transaction.commit();
+		session.flush();
 	}
 	
 	public void rollbackTx()

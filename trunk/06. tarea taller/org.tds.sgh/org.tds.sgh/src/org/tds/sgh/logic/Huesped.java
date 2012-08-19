@@ -36,4 +36,13 @@ public class Huesped {
 		return documento;
 	}
 
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
+
+	
 }
