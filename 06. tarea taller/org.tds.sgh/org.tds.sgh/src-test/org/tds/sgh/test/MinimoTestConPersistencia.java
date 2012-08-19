@@ -88,7 +88,7 @@ public class MinimoTestConPersistencia extends BaseTest
 	public void tearDown() throws Exception
 	{
 		cnx.commitTx();
-
+		cnx.close();
 		hr = null;
 		tr = null;
 		
@@ -191,7 +191,7 @@ public class MinimoTestConPersistencia extends BaseTest
 		
 		if (CH == null)
 		{
-			CadenaHotelera newCH = CadenaHotelera.getInstance();
+			CadenaHotelera newCH = new CadenaHotelera();
 			
 			newCH.registrarCliente(nombreCliente, telefono, email);
 			newCH.registrarCliente(nombreCliente2, telefono, email);
