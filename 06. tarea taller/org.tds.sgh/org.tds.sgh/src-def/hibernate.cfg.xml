@@ -28,14 +28,7 @@
 		<mapping class="org.tds.sgh.logic.Habitacion"/>
 		<mapping class="org.tds.sgh.logic.Hotel"/>
 		<mapping class="org.tds.sgh.logic.TipoHabitacion"/>
-		<mapping class="org.tds.sgh.logic.DatosHuesped"/>
-		<mapping class="org.tds.sgh.logic.TipoHabitacion"/>
 		<mapping class="org.tds.sgh.logic.Reserva"/>
 		<mapping class="org.tds.sgh.logic.Huesped"/>
-		<mapping class="org.tds.sgh.logic.EstadoReserva"/>
-		<mapping class="org.tds.sgh.logic.ControllerFactory"/>
-
-
-		
 	</session-factory>
 </hibernate-configuration>

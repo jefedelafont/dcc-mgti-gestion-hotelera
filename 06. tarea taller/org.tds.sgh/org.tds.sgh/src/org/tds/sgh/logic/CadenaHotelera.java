@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 
 import org.tds.sgh.dto.HotelDTO;
@@ -39,14 +40,15 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 		this.id = id;
 	}
 	
-	private static CadenaHotelera instance;
+//	private static CadenaHotelera instance;
+//
+//	public static CadenaHotelera getInstance() {
+//		if (instance == null)
+//			instance = new CadenaHotelera();
+//		return instance;
+//	}
 
-	public static CadenaHotelera getInstance() {
-		if (instance == null)
-			instance = new CadenaHotelera();
-		return instance;
-	}
-
+	
 	private static long numeracionReservas = 0;
 
 	// Atributos --------------------------------------------------------------
@@ -404,4 +406,15 @@ public class CadenaHotelera implements IDatosCadenaHotelera,
 		Precondition.isTrue(existeReserva, "No existe la reserva propocionada: " + codigoReserva);
 		
 	}
+
+	@OneToOne(cascade=CascadeType.ALL)
+	public Hotel getHotelEnUso() {
+		return hotelEnUso;
+	}
+
+	public void setHotelEnUso(Hotel hotelEnUso) {
+		this.hotelEnUso = hotelEnUso;
+	}
+	
+	
 }

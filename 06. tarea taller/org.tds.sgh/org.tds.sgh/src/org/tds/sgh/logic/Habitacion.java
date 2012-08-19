@@ -1,9 +1,11 @@
 package org.tds.sgh.logic;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Habitacion implements IDatosHabitacion
@@ -47,12 +49,21 @@ public class Habitacion implements IDatosHabitacion
 
 	
 	// Operaciones ------------------------------------------------------------
-
-	TipoHabitacion getTipoHabitacion()
+	@OneToOne(cascade=CascadeType.ALL)
+	public TipoHabitacion getTipoHabitacion()
 	{
 		return this.tipoHabitacion;
 	}
 
+	
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setTipoHabitacion(TipoHabitacion tipoHabitacion) {
+		this.tipoHabitacion = tipoHabitacion;
+	}
 
 	public boolean eresDelTIpo(TipoHabitacion tipoHabitacion) {
 		return this.tipoHabitacion.equals(tipoHabitacion);

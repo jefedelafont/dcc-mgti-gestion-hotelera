@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.tds.sgh.dto.ReservaDTO;
 import org.tds.sgh.dto.TipoHabitacionDTO;
@@ -40,7 +41,10 @@ public class Hotel implements IDatosHotel{
 	private Map<Long, Reserva> reservas;
 	private Reserva reservaSeleccionada;
 
-	
+	public Hotel(){
+		this.habitaciones = new HashMap<String, Habitacion>();
+		this.reservas = new HashMap<Long, Reserva>();
+	}
 	
 	// Constructores ----------------------------------------------------------
 
@@ -290,4 +294,20 @@ public class Hotel implements IDatosHotel{
 		return this.reservas.containsKey(codigoReserva);
 	}
 
+	@OneToOne(cascade=CascadeType.ALL)
+	public Reserva getReservaSeleccionada() {
+		return reservaSeleccionada;
+	}
+
+	
+	public void setReservaSeleccionada(Reserva reservaSeleccionada) {
+		this.reservaSeleccionada = reservaSeleccionada;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	
+	
 }

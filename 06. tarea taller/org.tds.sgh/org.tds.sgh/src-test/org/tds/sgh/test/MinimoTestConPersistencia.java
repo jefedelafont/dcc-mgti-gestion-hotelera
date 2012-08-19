@@ -88,7 +88,8 @@ public class MinimoTestConPersistencia extends BaseTest
 	public void tearDown() throws Exception
 	{
 		cnx.commitTx();
-		cnx.close();
+		
+		
 		hr = null;
 		tr = null;
 		
