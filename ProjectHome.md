@@ -1,0 +1,2 @@
+El objetivo de este proyecto es mantener todos los artefactos del sistema del taller de software sistema de gestión hotelera. Cuyo fin es el de realizar el "subsistema de reservas" del sistema de gestión hotelera con todos
+los artefactos que debe tener un sistema de información orientado a objetos.
